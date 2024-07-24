@@ -1,0 +1,69 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.status-container {
+    margin-top: 50px;
+}
+
+.status-header {
+    background-color: #e9f7ed;
+    border-left: 4px solid #28a745;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.status-header h5 {
+    color: #28a745;
+}
+
+.centric {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.uptime-bar {
+    width: 100%;
+    background-color: #e9ecef;
+    height: 10px;
+    border-radius: 5px;
+}
+
+.uptime-bar-fill {
+    background-color: #28a745;
+    height: 100%;
+    width: 100%;
+}
+
+.system-status {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.uptime-percentage {
+    color: #28a745;
+}
+
+.gradient-border {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #b8b8b8;
+    overflow: hidden;
+    background: linear-gradient(90deg, rgb(212, 255, 217) 0%, rgb(243, 243, 243) 100%);
+}
+
+.text-icon-operational {
+    color: #28a745;
+    /* Green color */
+}
+
+.hoverEffect{
+    padding: 0%;
+}
+
+.hoverEffect:hover {
+    background-color: lightgreen;
+}
