@@ -11,7 +11,12 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const server = createServer(app);
-const io = new Server(server);
+const io = new Server(server, {
+	cors: {
+		origin: "http://localhost:5173", // Your client's origin
+		methods: ["GET", "POST"]
+	}
+});
 
 app.get('/', (req, res) => {
 	res.send('Hello World!');
