@@ -1,21 +1,27 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const { createServer } = require('http');
+const { Server } = require('socket.io');
 const cors = require('cors');
 const app = express();
 const port = 3000;
 
-app.use(cors()); // Enable CORS for all origins
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const server = createServer(app);
+const io = new Server(server);
 
 app.get('/', (req, res) => {
 	res.send('Hello World!');
 });
 
+io.on('connection', (socket) => {
+	console.log('a user connected');
+});
+
 app.get('/insta', (req, res) => {
-	console.log(`
-		
-		`);
 	console.log("GET   ---   Instagram => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
 
@@ -35,9 +41,6 @@ app.post('/insta', (req, res) => {
 });
 
 app.get('/user', (req, res) => {
-	console.log(`
-		
-	`);
 	console.log("GET   ---   User => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
 
@@ -56,6 +59,6 @@ app.post('/user', (req, res) => {
 	res.status(200).send('Event received');
 });
 
-app.listen(port, '0.0.0.0', () => {
+server.listen(port, '0.0.0.0', () => {
 	console.log(`Server running at http://0.0.0.0:${port}`);
 });
