@@ -24,6 +24,10 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
 	console.log('a user connected');
+
+	socket.on('disconnect', () => {
+		console.log('user disconnected');
+	});
 });
 
 app.get('/insta', (req, res) => {
@@ -42,6 +46,8 @@ app.post('/insta', (req, res) => {
 	console.log('Body:', JSON.stringify(req.body));
 	// Handle webhook events here
 
+
+	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
 	res.status(200).send('Event received');
 });
 
