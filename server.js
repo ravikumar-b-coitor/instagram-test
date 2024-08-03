@@ -13,7 +13,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const server = createServer(app);
 const io = new Server(server, {
 	cors: {
-		origin: "http://localhost:5173", // Your client's origin
+		origin: [
+			"http://localhost:5173", // Your client's origin
+			"https://admin-digitalwall.coitor.com" // Additional origin
+		],
 		methods: ["GET", "POST"]
 	}
 });
