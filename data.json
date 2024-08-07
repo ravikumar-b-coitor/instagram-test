@@ -53,6 +53,18 @@
                 "OfferExpiryDate": null
             },
             {
+                "ContentKey": 230000416,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/Mia/20240806090038858162.jpg",
+                "FileSize": "2.26",
+                "FileName": "2413x4140px1722915038.jpg",
+                "FileType": 1,
+                "Description": "upto 19th August",
+                "ContentCategoryName": "Offers",
+                "Duration": 20,
+                "OfferStartDate": "2024-08-06",
+                "OfferExpiryDate": "2024-08-19"
+            },
+            {
                 "ContentKey": 230000415,
                 "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/Mia/20240806085922466066.jpg",
                 "FileSize": "2.75",
