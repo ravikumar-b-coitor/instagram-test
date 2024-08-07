@@ -6,6 +6,8 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
+const data = require('./data.json');
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,8 +24,13 @@ const io = new Server(server, {
 });
 
 app.get('/', (req, res) => {
-	res.send('Hello World!');
+	// Combine both messages into one response
+	res.json({
+		data,
+		message: 'Success'
+	});
 });
+
 
 io.on('connection', (socket) => {
 	console.log('a user connected');

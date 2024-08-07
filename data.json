@@ -1,0 +1,98 @@
+{
+    "Status": 1,
+    "config": {
+        "BranchInfo": {
+            "BranchDetailKey": 230000306,
+            "PublicStore": false,
+            "BranchName": "Mia by Tanishq - Inorbit Mall, Vashi",
+            "WidgetKeys": "230000001",
+            "TotalGoogleReviewCount": 349,
+            "GoogleAverageRating": 4.9,
+            "QRCodeURL": "https://search.google.com/local/writereview?placeid=ChIJFxOlPALB5zsRNPWxLw82-Y4",
+            "LayoutKey": 230000002,
+            "Layout": "Portrait",
+            "BusinessDetailKey": 230000059,
+            "BusinessName": "Mia",
+            "WidgetConf": "{\"Content\": {\"UpdateTime\": 0, \"Count\": 20, \"WidgetKey\": 230000001}}",
+            "StoreDisplayName": null,
+            "DisplayDetailKey": 230000948,
+            "BranchBGURL": null,
+            "LogoURL": "https://digital--wall--data.s3.us-east-2.amazonaws.com/Mia/20240411160540822408.png",
+            "ColorTheme": "#E77A8B",
+            "Display": "TV"
+        },
+        "Widgets": [
+            "Content"
+        ],
+        "Webview": 0
+    },
+    "Data": {
+        "InstaPostsImage": [],
+        "InstaPostsVideo": [],
+        "GoogleReviews": [
+            {
+                "Status": 1,
+                "ReviewComment": "kVqKr5a1p+b8xcxRMTZbZSakiLhvUXUzZzdqvzkDLIhaXQXZL1nzNKLocnhAZMS8wcdjAmscXdNsbMkzdi6d3m3FFz1nSZTYkILMYcO+g/odLyxXFqVuvK4tEw8VPhkWV8Kjf4d/JyIMvRoOZ//6xfPWus0ZUAVm1K9KgYEQc9m2JPTBd1IvAVG62vGBfoWMxcp4kWp4CIB8QCK9OrEEVYNJsuZkej9z73C4vr0IM8OEqEFPzO1PzjucoJRZ8Q5ABaQP4KZJsZX0YCYeAy1XtrYwarltUrJp13zYeOQ3PMDNUtArLOgNQfwTeTZbgaeBOZsAGfc15N6mbrKwhJgrOA==",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-08-04T07:23:01",
+                "google_review": 530032299
+            }
+        ],
+        "Content": [
+            {
+                "ContentKey": 230000426,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/Mia/20240807173117974430.png",
+                "FileSize": "1.07",
+                "FileName": "2413x41401723032077.png",
+                "FileType": 1,
+                "Description": "Testing",
+                "ContentCategoryName": "Generic",
+                "Duration": 20,
+                "OfferStartDate": null,
+                "OfferExpiryDate": null
+            },
+            {
+                "ContentKey": 230000416,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/Mia/20240806090038858162.jpg",
+                "FileSize": "2.26",
+                "FileName": "2413x4140px1722915038.jpg",
+                "FileType": 1,
+                "Description": "upto 19th August",
+                "ContentCategoryName": "Offers",
+                "Duration": 20,
+                "OfferStartDate": "2024-08-06",
+                "OfferExpiryDate": "2024-08-19"
+            },
+            {
+                "ContentKey": 230000415,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/Mia/20240806085922466066.jpg",
+                "FileSize": "2.75",
+                "FileName": "2413x41401722914962.jpg",
+                "FileType": 1,
+                "Description": "Silver Lifetime",
+                "ContentCategoryName": "Offers",
+                "Duration": 20,
+                "OfferStartDate": "2024-08-06",
+                "OfferExpiryDate": "2024-12-31"
+            },
+            {
+                "ContentKey": 230000259,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/Mia/20240522092752223016.jpg",
+                "FileSize": "3.56 MB",
+                "FileName": "2413x41401716350272.jpg",
+                "FileType": 1,
+                "Description": "Product Creative",
+                "ContentCategoryName": "Offers",
+                "Duration": 20,
+                "OfferStartDate": "2024-05-22",
+                "OfferExpiryDate": "2024-12-31"
+            }
+        ],
+        "HashtagLists": [],
+        "LatestData": {
+            "Reviews": [],
+            "InstaPosts": []
+        }
+    }
+}
