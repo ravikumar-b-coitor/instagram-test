@@ -23,10 +23,7 @@ const io = new Server(server, {
 
 app.get('/', (req, res) => {
 	// Combine both messages into one response
-	res.json({
-		data,
-		message: 'Success'
-	});
+	res.send("Hello world!")
 });
 
 
