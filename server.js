@@ -6,8 +6,6 @@ const cors = require('cors');
 const app = express();
 const port = 3000;
 
-const data = require('./data.json');
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -53,6 +51,26 @@ app.get('/insta', (req, res) => {
 
 app.post('/insta', (req, res) => {
 	console.log("POST   ---   Instagram => ", 'Params:', req.params, 'Query:', req.query);
+	console.log('Body:', JSON.stringify(req.body));
+	// Handle webhook events here
+
+
+	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
+	res.status(200).send('Event received');
+});
+
+app.post('/insta/feed', (req, res) => {
+	console.log("POST   ---   /insta/feed => ", 'Params:', req.params, 'Query:', req.query);
+	console.log('Body:', JSON.stringify(req.body));
+	// Handle webhook events here
+
+
+	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
+	res.status(200).send('Event received');
+});
+
+app.post('/insta/messages', (req, res) => {
+	console.log("POST   ---   /insta/messages => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
 	// Handle webhook events here
 
