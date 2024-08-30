@@ -58,7 +58,7 @@ app.post('/insta', async (req, res) => {
 		console.log(`https://api-digitalwall.coitor.com/Instagram/ReplyComment/${data.entry[0].changes[0].value.id}`, {
 			Message: data.entry[0].changes[0].value.text
 		})
-		const response = await axios.get(`https://api-digitalwall.coitor.com/Instagram/ReplyComment/${data.entry[0].changes[0].value.id}`, {
+		const response = await axios.post(`https://api-digitalwall.coitor.com/Instagram/ReplyComment/${data.entry[0].changes[0].value.id}`, {
 			Message: data.entry[0].changes[0].value.text
 		});
 
