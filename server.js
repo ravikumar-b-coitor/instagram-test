@@ -82,9 +82,12 @@ new comment received.....
 		}
 
 		if (data?.object == "instagram" && data?.entry[0]?.messaging) {
-			const senderId = data.entry[0].messaging[0].sender.id;
-			const recipientId = data.entry[0].messaging[0].recipient.id;
-			const text = data.entry[0].messaging[0].message.text;
+			console.log("Ok")
+			const senderId = data?.entry[0]?.messaging[0]?.sender.id;
+			const recipientId = data?.entry[0]?.messaging[0]?.recipient.id;
+			const text = data?.entry[0]?.messaging[0]?.message.text;
+
+			console.log(senderId, recipientId, text)
 
 			const response = await axios.post(`https://api-digitalwall.coitor.com//Instagram/ReplyDirectDM`, {
 				SenderId: senderId,
