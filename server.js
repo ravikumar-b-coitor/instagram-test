@@ -13,6 +13,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const API_URL = "https://api-digitalwall-demo.xploro.io/"
+
 const server = createServer(app);
 const io = new Server(server, {
 	cors: {
@@ -69,7 +71,7 @@ app.post('/insta', async (req, res) => {
 			if (postId && messageText && commentId) {
 				try {
 					const response = await axios.post(
-						'https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation',
+						`${API_URL}Instagram/ReplyCommentAutomation`,
 						qs.stringify({
 							PostId: postId,
 							Message: messageText,
@@ -119,7 +121,7 @@ app.post('/insta', async (req, res) => {
 					formData.append('RecipientId', recipientId);
 
 					const response = await axios.post(
-						'https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM',
+						`${API_URL}Instagram/ReplyDirectDM`,
 						formData,
 						{
 							headers: {
