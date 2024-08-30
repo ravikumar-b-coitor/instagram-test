@@ -59,7 +59,7 @@ app.post('/insta', async (req, res) => {
 			const response = await axios.post(
 				`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`,
 				qs.stringify({
-					PostId: data.entry[0].id,
+					PostId: data.entry[0].changes[0].value.media.id,
 					Message: data.entry[0].changes[0].value.text,
 				}),
 				{
