@@ -59,7 +59,7 @@ app.post('/insta', async (req, res) => {
 		if (data?.object === "instagram" &&
 			data?.entry?.length > 0 &&
 			data.entry[0]?.changes?.length > 0 &&
-			data.entry[0].changes[0]?.field === "comments" && data.entry[0]?.changes[0].value?.parent_id == "undefined") {
+			data.entry[0].changes[0]?.field === "comments" && data.entry[0].changes[0].value?.parent_id === undefined) {
 
 			const postId = data.entry[0].changes[0].value?.media?.id;
 			const messageText = data.entry[0].changes[0].value?.text;
