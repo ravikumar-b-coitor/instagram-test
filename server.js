@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const { createServer } = require('http');
 const { Server } = require('socket.io');
+const axios = require("axios");
 const cors = require('cors');
 const app = express();
 const port = 3000;
@@ -46,13 +47,22 @@ app.get('/insta', (req, res) => {
 	}
 });
 
-app.post('/insta', (req, res) => {
+app.post('/insta', async (req, res) => {
 	console.log("POST   ---   Instagram => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
 	// Handle webhook events here
 	const data = req.body;
 
 	if (data.object == "instagram" && data.entry[0].changes[0].field == "comments") {
+
+		console.log(`https://api-digitalwall.coitor.com/Instagram/ReplyComment/${data.entry[0].changes[0].value.id}`, {
+			Message: data.entry[0].changes[0].value.text
+		})
+		const response = await axios.get(`https://api-digitalwall.coitor.com/Instagram/ReplyComment/${data.entry[0].changes[0].value.id}`, {
+			Message: data.entry[0].changes[0].value.text
+		});
+
+		console.log(response);
 		console.log(`
 	
 new comment received.....
