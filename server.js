@@ -64,6 +64,7 @@ app.post('/insta', async (req, res) => {
 			const postId = data.entry[0].changes[0].value?.media?.id;
 			const messageText = data.entry[0].changes[0].value?.text;
 			const commentId = data.entry[0]?.changes[0].value?.id;
+			const RecipientID = data.entry[0]?.changes[0].value?.from.id;
 
 			if (postId && messageText && commentId) {
 				try {
@@ -72,6 +73,7 @@ app.post('/insta', async (req, res) => {
 						qs.stringify({
 							PostId: postId,
 							Message: messageText,
+							RecipientID: RecipientID,
 						}),
 						{
 							headers: {
