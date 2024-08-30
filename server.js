@@ -55,7 +55,7 @@ app.post('/insta', async (req, res) => {
 		// Handle webhook events here
 		const data = req.body;
 
-		if (data?.object == "instagram" && data?.entry[0]?.changes[0]?.field == "comments") {
+		if (data?.object == "instagram" && data?.entry[0] && data?.entry[0]?.changes[0] && data?.entry[0]?.changes[0]?.field == "comments") {
 			const response = await axios.post(
 				`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`,
 				qs.stringify({
