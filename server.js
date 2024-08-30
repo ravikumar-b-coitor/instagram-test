@@ -115,7 +115,7 @@ app.post('/insta', async (req, res) => {
 						{
 							SenderId: senderId,
 							DmMessage: text,
-							RecipientID: recipientId
+							RecipientId: recipientId
 						},
 						{
 							headers: {
