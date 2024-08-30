@@ -50,6 +50,15 @@ app.post('/insta', (req, res) => {
 	console.log("POST   ---   Instagram => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
 	// Handle webhook events here
+	const data = req.body;
+
+	if (data.object == "instagram" && data.entry[0].changes[0].field == "comments") {
+		console.log(`
+	
+new comment received.....
+
+	`,)
+	}
 
 
 	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
