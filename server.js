@@ -68,7 +68,7 @@ app.post('/insta', async (req, res) => {
 						'accept': 'application/json'
 					},
 					params: {
-						CommentID: data.entry[0].changes[0].value.id
+						CommentID: data.entry[0].id
 					}
 				}
 			);
