@@ -112,9 +112,9 @@ app.post('/insta', async (req, res) => {
 			if (senderId && recipientId && text) {
 				try {
 					const formData = new FormData();
-					form.append('SenderId', senderId);
-					form.append('DmMessage', text);
-					form.append('RecipientId', recipientId);
+					formData.append('SenderId', senderId);
+					formData.append('DmMessage', text);
+					formData.append('RecipientId', recipientId);
 
 					const response = await axios.post(
 						'https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM',
