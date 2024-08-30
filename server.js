@@ -112,11 +112,11 @@ app.post('/insta', async (req, res) => {
 				try {
 					const response = await axios.post(
 						'https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM',
-						{
+						qs.stringify({
 							SenderId: senderId,
 							DmMessage: text,
 							RecipientId: recipientId
-						},
+						}),
 						{
 							headers: {
 								'Content-Type': 'application/json',
