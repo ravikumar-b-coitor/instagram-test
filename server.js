@@ -49,40 +49,58 @@ app.get('/insta', (req, res) => {
 });
 
 app.post('/insta', async (req, res) => {
-	console.log("POST   ---   Instagram => ", 'Params:', req.params, 'Query:', req.query);
-	console.log('Body:', JSON.stringify(req.body));
-	// Handle webhook events here
-	const data = req.body;
+	try {
+		console.log("POST   ---   Instagram => ", 'Params:', req.params, 'Query:', req.query);
+		console.log('Body:', JSON.stringify(req.body));
+		// Handle webhook events here
+		const data = req.body;
 
-	if (data.object == "instagram" && data.entry[0].changes[0].field == "comments") {
-		const response = await axios.post(
-			`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`, 
-			qs.stringify({
-				PostId: data.entry[0].id,
-				Message: data.entry[0].changes[0].value.text,
-			}), 
-			{
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-					'accept': 'application/json'
-				},
-				params: {
-					CommentID: data.entry[0].changes[0].value.id
+		if (data?.object == "instagram" && data?.entry[0]?.changes[0]?.field == "comments") {
+			const response = await axios.post(
+				`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`,
+				qs.stringify({
+					PostId: data.entry[0].id,
+					Message: data.entry[0].changes[0].value.text,
+				}),
+				{
+					headers: {
+						'Content-Type': 'application/x-www-form-urlencoded',
+						'accept': 'application/json'
+					},
+					params: {
+						CommentID: data.entry[0].changes[0].value.id
+					}
 				}
-			}
-		);
+			);
 
-		console.log(response);
-		console.log(`
+			console.log(response);
+			console.log(`
 	
 new comment received.....
 
-	`,)
+	`)
+		}
+
+		if (data?.object == "instagram" && data?.entry[0]?.messaging) {
+			const senderId = data.entry[0].messaging[0].sender.id;
+			const recipientId = data.entry[0].messaging[0].recipient.id;
+			const text = data.entry[0].messaging[0].message.text;
+
+			const response = await axios.post(`https://api-digitalwall.coitor.com//Instagram/ReplyDirectDM`, {
+				SenderId: senderId,
+				DmMessage: text,
+				RecipientID: recipientId
+			})
+
+			console.log(response)
+		}
+
+
+		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
+		res.status(200).send('Event received');
+	} catch (error) {
+		console.error("ErRrOr", error);
 	}
-
-
-	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
-	res.status(200).send('Event received');
 });
 
 app.post('/insta/feed', (req, res) => {
