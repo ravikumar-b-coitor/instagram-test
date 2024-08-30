@@ -62,7 +62,7 @@ app.post('/insta', async (req, res) => {
 
 			const postId = data.entry[0].changes[0].value?.media?.id;
 			const messageText = data.entry[0].changes[0].value?.text;
-			const commentId = data.entry[0]?.id;
+			const commentId = data.entry[0]?.changes[0].value?.id;
 
 			if (postId && messageText && commentId) {
 				try {
