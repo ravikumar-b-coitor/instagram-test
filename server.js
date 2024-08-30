@@ -121,7 +121,7 @@ app.post('/insta', async (req, res) => {
 						formData,
 						{
 							headers: {
-								'Content-Type': 'application/json',
+								...formData.getHeaders(), // Use form-data's headers
 								'accept': 'application/json'
 							}
 						}
