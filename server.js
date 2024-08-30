@@ -55,49 +55,86 @@ app.post('/insta', async (req, res) => {
 		// Handle webhook events here
 		const data = req.body;
 
-		if (data?.object == "instagram" && data?.entry[0] && data?.entry[0]?.changes[0] && data?.entry[0]?.changes[0]?.field == "comments") {
-			const response = await axios.post(
-				`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`,
-				qs.stringify({
-					PostId: data.entry[0].changes[0].value.media.id,
-					Message: data.entry[0].changes[0].value.text,
-				}),
-				{
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded',
-						'accept': 'application/json'
-					},
-					params: {
-						CommentID: data.entry[0].id
-					}
+		if (data?.object === "instagram" &&
+			data?.entry?.length > 0 &&
+			data.entry[0]?.changes?.length > 0 &&
+			data.entry[0].changes[0]?.field === "comments") {
+
+			const postId = data.entry[0].changes[0].value?.media?.id;
+			const messageText = data.entry[0].changes[0].value?.text;
+			const commentId = data.entry[0]?.id;
+
+			if (postId && messageText && commentId) {
+				try {
+					const response = await axios.post(
+						'https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation',
+						qs.stringify({
+							PostId: postId,
+							Message: messageText,
+						}),
+						{
+							headers: {
+								'Content-Type': 'application/x-www-form-urlencoded',
+								'accept': 'application/json'
+							},
+							params: {
+								CommentID: commentId
+							}
+						}
+					);
+
+					console.log("Response:", response.data);
+					console.log("New comment received.....");
+
+				} catch (error) {
+					console.error("Error sending reply:", error);
 				}
-			);
+			} else {
+				console.error("Missing required fields.");
+			}
 
-			console.log(response);
-			console.log(`
-	
-new comment received.....
-
-	`)
+		} else {
+			console.error("Data structure does not match expected format.");
 		}
 
-		if (data?.object == "instagram" && data?.entry[0]?.messaging) {
-			console.log("Ok")
-			const senderId = data?.entry[0]?.messaging[0]?.sender.id;
-			const recipientId = data?.entry[0]?.messaging[0]?.recipient.id;
-			const text = data?.entry[0]?.messaging[0]?.message.text;
+		if (data?.object === "instagram" && data?.entry?.[0]?.messaging?.length > 0) {
+			console.log("Ok");
 
-			console.log(senderId, recipientId, text)
+			const senderId = data.entry[0].messaging[0]?.sender?.id;
+			const recipientId = data.entry[0].messaging[0]?.recipient?.id;
+			const text = data.entry[0].messaging[0]?.message?.text;
 
-			const response = await axios.post(`https://api-digitalwall.coitor.com//Instagram/ReplyDirectDM`, {
-				SenderId: senderId,
-				DmMessage: text,
-				RecipientID: recipientId
-			})
+			console.log("Sender ID:", senderId);
+			console.log("Recipient ID:", recipientId);
+			console.log("Text:", text);
 
-			console.log(response)
+			if (senderId && recipientId && text) {
+				try {
+					const response = await axios.post(
+						'https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM',
+						{
+							SenderId: senderId,
+							DmMessage: text,
+							RecipientID: recipientId
+						},
+						{
+							headers: {
+								'Content-Type': 'application/json',
+								'accept': 'application/json'
+							}
+						}
+					);
+
+					console.log("Response:", response.data);
+				} catch (error) {
+					console.error("Error sending direct message:", error);
+				}
+			} else {
+				console.error("Missing required fields: SenderId, RecipientID, or text.");
+			}
+		} else {
+			console.error("Data structure does not match expected format or messaging is missing.");
 		}
-
 
 		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
 		res.status(200).send('Event received');
