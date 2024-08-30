@@ -4,6 +4,7 @@ const { createServer } = require('http');
 const { Server } = require('socket.io');
 const axios = require("axios");
 const cors = require('cors');
+const qs = require('qs');
 const app = express();
 const port = 3000;
 
@@ -54,18 +55,22 @@ app.post('/insta', async (req, res) => {
 	const data = req.body;
 
 	if (data.object == "instagram" && data.entry[0].changes[0].field == "comments") {
-
-		console.log(`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`, {
-			PostId: data.entry[0].id,
-			Message: data.entry[0].changes[0].value.text,
-			CommentID: data.entry[0].changes[0].value.id
-		});
-
-		const response = await axios.post(`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`, {
-			PostId: data.entry[0].id,
-			Message: data.entry[0].changes[0].value.text,
-			CommentID: data.entry[0].changes[0].value.id
-		});
+		const response = await axios.post(
+			`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`, 
+			qs.stringify({
+				PostId: data.entry[0].id,
+				Message: data.entry[0].changes[0].value.text,
+			}), 
+			{
+				headers: {
+					'Content-Type': 'application/x-www-form-urlencoded',
+					'accept': 'application/json'
+				},
+				params: {
+					CommentID: data.entry[0].changes[0].value.id
+				}
+			}
+		);
 
 		console.log(response);
 		console.log(`
