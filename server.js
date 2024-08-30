@@ -55,11 +55,16 @@ app.post('/insta', async (req, res) => {
 
 	if (data.object == "instagram" && data.entry[0].changes[0].field == "comments") {
 
-		console.log(`https://api-digitalwall.coitor.com/Instagram/ReplyComment/${data.entry[0].changes[0].value.id}`, {
-			Message: data.entry[0].changes[0].value.text
-		})
-		const response = await axios.post(`https://api-digitalwall.coitor.com/Instagram/ReplyComment/${data.entry[0].changes[0].value.id}`, {
-			Message: data.entry[0].changes[0].value.text
+		console.log(`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`, {
+			PostId: data.entry[0].id,
+			Message: data.entry[0].changes[0].value.text,
+			CommentID: data.entry[0].changes[0].value.id
+		});
+
+		const response = await axios.post(`https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomation`, {
+			PostId: data.entry[0].id,
+			Message: data.entry[0].changes[0].value.text,
+			CommentID: data.entry[0].changes[0].value.id
 		});
 
 		console.log(response);
