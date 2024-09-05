@@ -67,15 +67,19 @@ app.post('/insta', async (req, res) => {
 			const messageText = data.entry[0].changes[0].value?.text;
 			const commentId = data.entry[0]?.changes[0].value?.id;
 			const RecipientID = data.entry[0]?.changes[0].value?.from.id;
+			const RecipientName = data.entry[0]?.changes[0].value?.from.username
+			const time = data.entry[0]?.time
 
 			if (postId && messageText && commentId) {
 				try {
 					const response = await axios.post(
-						`${API_URL}Instagram/ReplyCommentAutomation`,
+						`${API_URL}Instagram/ReplyCommentAutomationV2`,
 						qs.stringify({
 							PostId: postId,
 							Message: messageText,
 							RecipientID: RecipientID,
+							RecipientName: RecipientName,
+							CommentTime: Number(time),
 						}),
 						{
 							headers: {
