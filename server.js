@@ -20,7 +20,9 @@ const io = new Server(server, {
 	cors: {
 		origin: [
 			"http://localhost:5173", // Your client's origin
-			"https://admin-digitalwall.coitor.com" // Additional origin
+			"https://admin-digitalwall.coitor.com", // Additional origin
+			"https://admin-digitalwall.xploro.io",
+			"https://admin-digitalwall-demo.xploro.io"
 		],
 		methods: ["GET", "POST"]
 	}
