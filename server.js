@@ -13,7 +13,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const API_URL = "https://api-digitalwall.coitor.com/"
+// const API_URL = "https://api-digitalwall.coitor.com/"
+const API_URL = "https://api-digitalwall.xploro.io/"
 
 const server = createServer(app);
 const io = new Server(server, {
