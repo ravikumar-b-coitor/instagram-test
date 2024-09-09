@@ -61,6 +61,7 @@ app.post('/insta', async (req, res) => {
 		// Handle webhook events here
 		const data = req.body;
 
+		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
 		if (data?.object === "instagram" &&
 			data?.entry?.length > 0 &&
 			data.entry[0]?.changes?.length > 0 &&
@@ -149,7 +150,6 @@ app.post('/insta', async (req, res) => {
 			console.error("Data structure does not match expected format or messaging is missing.");
 		}
 
-		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
 		res.status(200).send('Event received');
 	} catch (error) {
 		console.error("ErRrOr", error);
