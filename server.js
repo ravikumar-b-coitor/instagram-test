@@ -91,9 +91,9 @@ app.post('/insta', async (req, res) => {
 								'Content-Type': 'application/json',
 								'accept': 'application/json'
 							},
-							params: {
-								CommentID: commentId
-							}
+							// params: {
+							// 	CommentID: commentId
+							// }
 						}
 					);
 
