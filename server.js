@@ -78,16 +78,17 @@ app.post('/insta', async (req, res) => {
 				try {
 					const response = await axios.post(
 						`${API_URL}Instagram/ReplyCommentAutomationV2`,
-						qs.stringify({
+						{
 							PostId: postId.toString(),
 							Message: messageText,
 							RecipientID: RecipientID,
 							RecipientName: RecipientName,
 							CommentTime: Number(time),
-						}),
+							CommentID: commentId,
+						},
 						{
 							headers: {
-								'Content-Type': 'application/x-www-form-urlencoded',
+								'Content-Type': 'application/json',
 								'accept': 'application/json'
 							},
 							params: {
