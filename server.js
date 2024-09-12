@@ -83,16 +83,13 @@ app.post('/insta', async (req, res) => {
 							RecipientID: RecipientID,
 							RecipientName: RecipientName,
 							CommentTime: Number(time),
-							CommentID: Number(commentId),
+							CommentID: commentId,
 						}),
 						{
 							headers: {
 								'Content-Type': 'application/json',
 								'accept': 'application/json'
 							},
-							// params: {
-							// 	CommentID: commentId
-							// }
 						}
 					);
 
