@@ -29,8 +29,7 @@ const io = new Server(server, {
 	}
 });
 
-app.get('/', (req, res) => {
-	// Combine both messages into one response
+app.get('/', async (req, res) => {
 	res.send("Hello world!")
 });
 
@@ -78,14 +77,14 @@ app.post('/insta', async (req, res) => {
 				try {
 					const response = await axios.post(
 						`${API_URL}Instagram/ReplyCommentAutomationV2`,
-						{
+						JSON.stringify({
 							PostId: postId.toString(),
 							Message: messageText,
 							RecipientID: RecipientID,
 							RecipientName: RecipientName,
 							CommentTime: Number(time),
 							CommentID: commentId,
-						},
+						}),
 						{
 							headers: {
 								'Content-Type': 'application/json',
