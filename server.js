@@ -83,7 +83,7 @@ app.post('/insta', async (req, res) => {
 							RecipientID: RecipientID,
 							RecipientName: RecipientName,
 							CommentTime: Number(time),
-							CommentID: commentId,
+							CommentID: Number(commentId),
 						}),
 						{
 							headers: {
