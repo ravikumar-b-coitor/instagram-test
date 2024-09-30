@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // const API_URL = "https://api-digitalwall.coitor.com/"
-const API_URL = "https://api-digitalwall.xploro.io/"
+const API_URL = "https://api-digitalwall.xploro.io/";
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -72,34 +72,46 @@ app.post('/insta', async (req, res) => {
 			const messageText = data.entry[0].changes[0].value?.text;
 			const commentId = data.entry[0]?.changes[0].value?.id;
 			const RecipientID = data.entry[0]?.changes[0].value?.from.id;
-			const RecipientName = data.entry[0]?.changes[0].value?.from.username
-			const time = data.entry[0]?.time
+			const RecipientName = data.entry[0]?.changes[0].value?.from.username;
+			const time = data.entry[0]?.time;
 
 			if (postId && messageText && commentId) {
+				const API_URLS = [
+					"https://admin-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
+					"https://admin-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
+					"https://admin-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+				];
+
+				const payload = {
+					PostId: postId.toString(),
+					Message: messageText,
+					RecipientID: RecipientID,
+					RecipientName: RecipientName,
+					CommentTime: Number(time),
+					CommentID: commentId,
+				};
+
 				try {
-					const response = await axios.post(
-						`${API_URL}Instagram/ReplyCommentAutomationV3`,
-						JSON.stringify({
-							PostId: postId.toString(),
-							Message: messageText,
-							RecipientID: RecipientID,
-							RecipientName: RecipientName,
-							CommentTime: Number(time),
-							CommentID: commentId,
-						}),
-						{
-							headers: {
-								'Content-Type': 'application/json',
-								'accept': 'application/json'
-							},
-						}
+					const responses = await Promise.all(
+						API_URLS.map(url =>
+							axios.post(url, JSON.stringify(payload), {
+								headers: {
+									'Content-Type': 'application/json',
+									'accept': 'application/json'
+								},
+							})
+						)
 					);
 
-					console.log("Response:", response.data);
-					console.log("New comment received.....");
+					// Handle responses from all endpoints
+					responses.forEach((response, index) => {
+						console.log(`Response from ${API_URLS[index]}:`, response.data);
+					});
+
+					console.log("New comment received and processed successfully.....");
 
 				} catch (error) {
-					console.error("Error sending reply:", error);
+					console.error("Error sending reply to one or more endpoints:", error);
 				}
 			} else {
 				console.error("Missing required fields.");
@@ -121,26 +133,37 @@ app.post('/insta', async (req, res) => {
 			console.log("Text:", text);
 
 			if (senderId && recipientId && text) {
-				try {
-					const formData = new FormData();
-					formData.append('SenderId', senderId);
-					formData.append('DmMessage', text);
-					formData.append('RecipientId', recipientId);
+				const API_URLS = [
+					"https://admin-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+					"https://admin-digitalwall.xploro.io/Instagram/ReplyDirectDM",
+					"https://admin-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
+				];
 
-					const response = await axios.post(
-						`${API_URL}Instagram/ReplyDirectDM`,
-						formData,
-						{
-							headers: {
-								...formData.getHeaders(), // Use form-data's headers
-								'accept': 'application/json'
-							}
-						}
+				const formData = new FormData();
+				formData.append('SenderId', senderId);
+				formData.append('DmMessage', text);
+				formData.append('RecipientId', recipientId);
+
+				try {
+					// Prepare form data for each endpoint
+					const responses = await Promise.all(
+						API_URLS.map(url =>
+							axios.post(url, formData, {
+								headers: {
+									...formData.getHeaders(), // Use form-data's headers
+									'accept': 'application/json'
+								}
+							})
+						)
 					);
 
-					console.log("Response:", response.data);
+					// Handle responses from all endpoints
+					responses.forEach((response, index) => {
+						console.log(`Response from ${API_URLS[index]}:`, response.data);
+					});
+
 				} catch (error) {
-					console.error("Error sending direct message:", error);
+					console.error("Error sending direct message to one or more endpoints:", error);
 				}
 			} else {
 				console.error("Missing required fields: SenderId, RecipientID, or text.");
