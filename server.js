@@ -105,7 +105,7 @@ app.post('/insta', async (req, res) => {
 
 					// Handle responses from all endpoints
 					responses.forEach((response, index) => {
-						console.log(`Response from ${API_URLS[index]}:`, response.data);
+						console.log(`Response from ${API_URLS[index]}:`, response.data.status);
 					});
 
 					console.log("New comment received and processed successfully.....");
@@ -159,7 +159,7 @@ app.post('/insta', async (req, res) => {
 
 					// Handle responses from all endpoints
 					responses.forEach((response, index) => {
-						console.log(`Response from ${API_URLS[index]}:`, response.data);
+						console.log(`Response from ${API_URLS[index]}:`, response.data.status);
 					});
 
 				} catch (error) {
