@@ -77,9 +77,9 @@ app.post('/insta', async (req, res) => {
 
 			if (postId && messageText && commentId) {
 				const API_URLS = [
-					"https://admin-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
-					"https://admin-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
-					"https://admin-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+					"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
+					"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
+					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
 				];
 
 				const payload = {
@@ -138,9 +138,9 @@ app.post('/insta', async (req, res) => {
 
 			if (senderId && recipientId && text) {
 				const API_URLS = [
-					"https://admin-digitalwall.coitor.com/Instagram/ReplyDirectDM",
-					"https://admin-digitalwall.xploro.io/Instagram/ReplyDirectDM",
-					"https://admin-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
+					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
+					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
 				];
 
 				const formData = new FormData();
@@ -150,7 +150,7 @@ app.post('/insta', async (req, res) => {
 
 				try {
 					// Prepare form data for each endpoint
-					const responses = await Promise.all(
+					const results = await Promise.allSettled(
 						API_URLS.map(url =>
 							axios.post(url, formData, {
 								headers: {
@@ -161,13 +161,17 @@ app.post('/insta', async (req, res) => {
 						)
 					);
 
-					// Handle responses from all endpoints
-					responses.forEach((response, index) => {
-						console.log(`Response from ${API_URLS[index]}:`, response.data.status);
+					// Handle results from all endpoints
+					results.forEach((result, index) => {
+						if (result.status === 'fulfilled') {
+							console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+						} else {
+							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+						}
 					});
 
 				} catch (error) {
-					console.error("Error sending direct message to one or more endpoints:", error);
+					console.error("Unexpected error:", error);
 				}
 			} else {
 				console.error("Missing required fields: SenderId, RecipientID, or text.");
