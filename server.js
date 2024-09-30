@@ -92,7 +92,7 @@ app.post('/insta', async (req, res) => {
 				};
 
 				try {
-					const responses = await Promise.all(
+					const results = await Promise.allSettled(
 						API_URLS.map(url =>
 							axios.post(url, JSON.stringify(payload), {
 								headers: {
@@ -103,15 +103,19 @@ app.post('/insta', async (req, res) => {
 						)
 					);
 
-					// Handle responses from all endpoints
-					responses.forEach((response, index) => {
-						console.log(`Response from ${API_URLS[index]}:`, response.data.status);
+					// Handle results from all endpoints
+					results.forEach((result, index) => {
+						if (result.status === 'fulfilled') {
+							console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+						} else {
+							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+						}
 					});
 
-					console.log("New comment received and processed successfully.....");
+					console.log("New comment received and processed.");
 
 				} catch (error) {
-					console.error("Error sending reply to one or more endpoints:", error);
+					console.error("Unexpected error:", error);
 				}
 			} else {
 				console.error("Missing required fields.");
