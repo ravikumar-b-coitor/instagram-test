@@ -29,10 +29,12 @@ const io = new Server(server, {
 	}
 });
 
-app.get('/', async (req, res) => {
-	res.send("Hello world!")
-});
+app.use(express.static('public'));
 
+app.get('/', (req, res) => {
+	res.send("Hello world...")
+	// res.sendFile(__dirname + '/public/index.html');
+});
 
 io.on('connection', (socket) => {
 	console.log('a user connected');
@@ -76,7 +78,7 @@ app.post('/insta', async (req, res) => {
 			if (postId && messageText && commentId) {
 				try {
 					const response = await axios.post(
-						`${API_URL}Instagram/ReplyCommentAutomationV2`,
+						`${API_URL}Instagram/ReplyCommentAutomationV3`,
 						JSON.stringify({
 							PostId: postId.toString(),
 							Message: messageText,
@@ -193,5 +195,5 @@ app.post('/user', (req, res) => {
 });
 
 server.listen(port, '0.0.0.0', () => {
-	console.log(`Server running at http://0.0.0.0:${port}`);
+	console.log(`Server running at http://localhost:${port}`);
 });
