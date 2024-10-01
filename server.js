@@ -289,10 +289,10 @@ app.post('/insta', async (req, res) => {
 
 			axios.get('https://api-digitalwall.coitor.com/Instagram/AddInstaDm/', {
 				params: {
-					SenderId: '360165860361984',
-					ReceiverId: '17841462886642365',
-					MessageId: 'aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDYyODg2NjQyMzY1OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI3NjA1NzI4MjkyODE4MzE5ODozMTg3MjAzMDc3NDgwNTI4MDI2MjgxMjUwMTU4NDkwNDE5MgZDZD',
-					Message: 'Hi'
+					SenderId: senderId,
+					ReceiverId: receiverId,
+					MessageId: messageId,
+					Message: message
 				}
 			})
 				.then(response => {
