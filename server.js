@@ -287,40 +287,22 @@ app.post('/insta', async (req, res) => {
 			// 	console.error("Unexpected error:", error);
 			// }
 
-			const params = new URLSearchParams({
-				SenderId: senderId,
-				ReceiverId: receiverId,
-				MessageId: messageId,
-				Message: message,
-			}).toString();
-			
-			const API_URLS = [
-				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm",
-				// "https://api-digitalwall.xploro.io/Instagram/AddInstaDm",
-				// "https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm"
-			];
-			
-			try {
-				const response = await fetch(`${API_URLS[0]}?${params}`, {
-					method: 'GET',
-					headers: {
-						'accept': 'application/json',
-						'Content-Type': 'application/json'
-					}
-				});
-			
-				if (!response.ok) {
-					throw new Error(`HTTP error! status: ${response.status}`);
+			axios.get('https://api-digitalwall.coitor.com/Instagram/AddInstaDm/', {
+				params: {
+					SenderId: '360165860361984',
+					ReceiverId: '17841462886642365',
+					MessageId: 'aWdfZAG1faXRlbToxOklHTWVzc2FnZAUlEOjE3ODQxNDYyODg2NjQyMzY1OjM0MDI4MjM2Njg0MTcxMDMwMTI0NDI3NjA1NzI4MjkyODE4MzE5ODozMTg3MjAzMDc3NDgwNTI4MDI2MjgxMjUwMTU4NDkwNDE5MgZDZD',
+					Message: 'Hi'
 				}
-			
-				const data = await response.json();
-				console.log(data, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-			
-				console.log("New dm added to DB...");
-			} catch (error) {
-				console.error("Unexpected error:", error);
-			}
-			
+			})
+				.then(response => {
+					console.log(response.data);
+				})
+				.catch(error => {
+					console.error('Error:', error);
+				});
+
+
 		} else {
 
 			console.log("Conditions not met or 'message' key is missing.");
