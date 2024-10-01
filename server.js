@@ -246,6 +246,8 @@ app.post('/insta', async (req, res) => {
 				Message: message
 			};
 
+			console.log(payload)
+
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm",
 				"https://api-digitalwall.xploro.io/Instagram/AddInstaDm",
