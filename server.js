@@ -309,14 +309,17 @@ app.post('/insta', async (req, res) => {
 			];
 
 			Promise.allSettled(
-				API_URLS.map(url => axios.get(url, {
-					params: {
-						SenderId: senderId,
-						ReceiverId: receiverId,
-						MessageId: messageId,
-						Message: message
-					}
-				}))
+				API_URLS.map(url => {
+					console.log(`Making request to: ${url}`);
+					return axios.get(url, {
+						params: {
+							SenderId: senderId,
+							ReceiverId: receiverId,
+							MessageId: messageId,
+							Message: message
+						}
+					});
+				})
 			)
 				.then(results => {
 					results.forEach((result, index) => {
