@@ -239,12 +239,11 @@ app.post('/insta', async (req, res) => {
 			const messageId = data.entry[0].messaging[0].message.mid;
 			const message = data.entry[0].messaging[0].message.text;
 
-			const payload = {
-				SenderId: senderId,
-				ReceiverId: receiverId,
-				MessageId: messageId,
-				Message: message
-			};
+			const formData = new FormData();
+			formData.append('SenderId', senderId);
+			formData.append('ReceiverId', receiverId);
+			formData.append('MessageId', messageId);
+			formData.append("Message", message)
 
 			console.log(`
 				
@@ -261,11 +260,11 @@ app.post('/insta', async (req, res) => {
 			try {
 				const results = await Promise.allSettled(
 					API_URLS.map(url =>
-						axios.post(url, JSON.stringify(payload), {
+						axios.post(url, formData, {
 							headers: {
-								'Content-Type': 'application/json',
+								...formData.getHeaders(), // Use form-data's headers
 								'accept': 'application/json'
-							},
+							}
 						})
 					)
 				);
@@ -283,12 +282,6 @@ app.post('/insta', async (req, res) => {
 			} catch (error) {
 				console.error("Unexpected error:", error);
 			}
-
-			console.log(`
-				|
-				
-				|
-				`)
 		} else {
 			console.log("Conditions not met or 'message' key is missing.");
 		}
