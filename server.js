@@ -259,24 +259,27 @@ app.post('/insta', async (req, res) => {
 			];
 
 			try {
-				const results = await Promise.allSettled(
-					API_URLS.map(url =>
-						axios.get(`${url}?${params}`, {
-							headers: {
-								'accept': 'application/json',
-							}
-						})
-					)
-				);
+				const response = await axios.get(`${API_URLS[0]}?${params}`, {
+					headers: {
+						'accept': 'application/json',
+					}
+				})
+
+				console.log(response, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+				// const results = await Promise.allSettled(
+				// 	API_URLS.map(url =>
+
+				// 	)
+				// );
 
 				// Handle results from all endpoints
-				results.forEach((result, index) => {
-					if (result.status === 'fulfilled') {
-						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-					} else {
-						console.error(`Error response from ${API_URLS[index]}:`, result);
-					}
-				});
+				// results.forEach((result, index) => {
+				// 	if (result.status === 'fulfilled') {
+				// 		console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+				// 	} else {
+				// 		console.error(`Error response from ${API_URLS[index]}:`, result);
+				// 	}
+				// });
 
 				console.log("New dm added to DB...");
 			} catch (error) {
