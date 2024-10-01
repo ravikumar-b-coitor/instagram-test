@@ -245,12 +245,6 @@ app.post('/insta', async (req, res) => {
 			formData.append('MessageId', messageId);
 			formData.append("Message", message)
 
-			console.log(`
-				
-				
-				
-				`, payload)
-
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm",
 				// "https://api-digitalwall.xploro.io/Instagram/AddInstaDm",
