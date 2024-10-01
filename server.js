@@ -228,6 +228,59 @@ app.post('/insta', async (req, res) => {
 			console.log("Conditions not met or 'read' key is missing.");
 		}
 
+		if (
+			data?.object === "instagram" &&
+			data?.entry?.length > 0 &&
+			data.entry[0]?.messaging?.length > 0 &&
+			data.entry[0].messaging[0]?.message
+		) {
+			const senderId = data.entry[0].messaging[0].sender.id;
+			const receiverId = data.entry[0].messaging[0].recipient.id;
+			const messageId = data.entry[0].messaging[0].message.mid;
+			const message = data.entry[0].messaging[0].message.text;
+
+			const payload = {
+				SenderId: senderId,
+				ReceiverId: receiverId,
+				MessageId: messageId,
+				Message: message
+			};
+
+			const API_URLS = [
+				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm",
+				"https://api-digitalwall.xploro.io/Instagram/AddInstaDm",
+				"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm"
+			];
+
+			try {
+				const results = await Promise.allSettled(
+					API_URLS.map(url =>
+						axios.post(url, payload, {
+							headers: {
+								'Content-Type': 'application/json',
+								'accept': 'application/json'
+							},
+						})
+					)
+				);
+
+				// Handle results from all endpoints
+				results.forEach((result, index) => {
+					if (result.status === 'fulfilled') {
+						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+					} else {
+						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+					}
+				});
+
+				console.log("New dm added to DB...");
+			} catch (error) {
+				console.error("Unexpected error:", error);
+			}
+		} else {
+			console.log("Conditions not met or 'message' key is missing.");
+		}
+
 		res.status(200).send('Event received');
 	} catch (error) {
 		console.error("ErRrOr", error);
