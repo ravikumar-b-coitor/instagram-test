@@ -262,6 +262,7 @@ app.post('/insta', async (req, res) => {
 				const response = await axios.get(`${API_URLS[0]}?${params}`, {
 					headers: {
 						'accept': 'application/json',
+						'Content-Type': 'application/json',
 					}
 				})
 
