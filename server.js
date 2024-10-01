@@ -180,6 +180,54 @@ app.post('/insta', async (req, res) => {
 			console.error("Data structure does not match expected format or messaging is missing.");
 		}
 
+		if (
+			data?.object === "instagram" &&
+			data?.entry?.length > 0 &&
+			data.entry[0]?.messaging?.length > 0 &&
+			data.entry[0].messaging[0]?.read
+		) {
+			console.log("Message read:", data.entry[0].messaging[0].read);
+			const API_URLS = [
+				"https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
+				"https://api-digitalwall.xploro.io/Instagram/InstaDmReadState",
+				"https://api-digitalwall-demo.xploro.io/Instagram/InstaDmReadState"
+			];
+
+			const payload = {
+				MessageId: data.entry[0].messaging[0].read.mid,
+				SenderId: data.entry[0].messaging[0].sender.id,
+				ReceiverId: data.entry[0].messaging[0].recipient.id,
+			};
+
+			try {
+				const results = await Promise.allSettled(
+					API_URLS.map(url =>
+						axios.post(url, JSON.stringify(payload), {
+							headers: {
+								'Content-Type': 'application/json',
+								'accept': 'application/json'
+							},
+						})
+					)
+				);
+
+				// Handle results from all endpoints
+				results.forEach((result, index) => {
+					if (result.status === 'fulfilled') {
+						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+					} else {
+						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+					}
+				});
+
+				console.log("New comment readed and processed...");
+			} catch (error) {
+				console.error("Unexpected error:", error);
+			}
+		} else {
+			console.log("Conditions not met or 'read' key is missing.");
+		}
+
 		res.status(200).send('Event received');
 	} catch (error) {
 		console.error("ErRrOr", error);
