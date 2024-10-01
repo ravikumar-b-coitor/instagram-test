@@ -239,11 +239,18 @@ app.post('/insta', async (req, res) => {
 			const messageId = data.entry[0].messaging[0].message.mid;
 			const message = data.entry[0].messaging[0].message.text;
 
-			const formData = new FormData();
-			formData.append('SenderId', senderId);
-			formData.append('ReceiverId', receiverId);
-			formData.append('MessageId', messageId);
-			formData.append("Message", message)
+			// const formData = new FormData();
+			// formData.append('SenderId', senderId);
+			// formData.append('ReceiverId', receiverId);
+			// formData.append('MessageId', messageId);
+			// formData.append("Message", message)
+
+			const params = new URLSearchParams({
+				SenderId: senderId,
+				ReceiverId: receiverId,
+				MessageId: messageId,
+				Message: message,
+			}).toString();
 
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm",
@@ -254,10 +261,9 @@ app.post('/insta', async (req, res) => {
 			try {
 				const results = await Promise.allSettled(
 					API_URLS.map(url =>
-						axios.post(url, formData, {
+						axios.get(`${url}?${params}`, {
 							headers: {
-								...formData.getHeaders(), // Use form-data's headers
-								'accept': 'application/json'
+								'accept': 'application/json',
 							}
 						})
 					)
