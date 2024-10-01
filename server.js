@@ -239,69 +239,6 @@ app.post('/insta', async (req, res) => {
 			const messageId = data.entry[0].messaging[0].message.mid;
 			const message = data.entry[0].messaging[0].message.text;
 
-			// const formData = new FormData();
-			// formData.append('SenderId', senderId);
-			// formData.append('ReceiverId', receiverId);
-			// formData.append('MessageId', messageId);
-			// formData.append("Message", message)
-
-			// const params = new URLSearchParams({
-			// 	SenderId: senderId,
-			// 	ReceiverId: receiverId,
-			// 	MessageId: messageId,
-			// 	Message: message,
-			// }).toString();
-
-			// const API_URLS = [
-			// 	"https://api-digitalwall.coitor.com/Instagram/AddInstaDm",
-			// 	// "https://api-digitalwall.xploro.io/Instagram/AddInstaDm",
-			// 	// "https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm"
-			// ];
-
-			// try {
-			// 	const response = await axios.get(`${API_URLS[0]}?${params}`, {
-			// 		headers: {
-			// 			'accept': 'application/json',
-			// 			'Content-Type': 'application/json',
-			// 		}
-			// 	})
-
-			// 	console.log(response, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-			// 	// const results = await Promise.allSettled(
-			// 	// 	API_URLS.map(url =>
-
-			// 	// 	)
-			// 	// );
-
-			// 	// Handle results from all endpoints
-			// 	// results.forEach((result, index) => {
-			// 	// 	if (result.status === 'fulfilled') {
-			// 	// 		console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-			// 	// 	} else {
-			// 	// 		console.error(`Error response from ${API_URLS[index]}:`, result);
-			// 	// 	}
-			// 	// });
-
-			// 	console.log("New dm added to DB...");
-			// } catch (error) {
-			// 	console.error("Unexpected error:", error);
-			// }
-
-			// axios.get('https://api-digitalwall.coitor.com/Instagram/AddInstaDm/', {
-			// 	params: {
-			// 		SenderId: senderId,
-			// 		ReceiverId: receiverId,
-			// 		MessageId: messageId,
-			// 		Message: message
-			// 	}
-			// })
-			// 	.then(response => {
-			// 		console.log(response.data);
-			// 	})
-			// 	.catch(error => {
-			// 		console.error('Error:', error);
-			// 	});
-
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
 				// "https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
