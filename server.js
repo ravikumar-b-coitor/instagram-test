@@ -250,7 +250,7 @@ app.post('/insta', async (req, res) => {
 				
 				
 				
-				`,payload)
+				`, payload)
 
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm",
@@ -261,7 +261,7 @@ app.post('/insta', async (req, res) => {
 			try {
 				const results = await Promise.allSettled(
 					API_URLS.map(url =>
-						axios.post(url, payload, {
+						axios.post(url, JSON.stringify(payload), {
 							headers: {
 								'Content-Type': 'application/json',
 								'accept': 'application/json'
