@@ -67,6 +67,7 @@ app.post('/insta', async (req, res) => {
 			data?.entry?.length > 0 &&
 			data.entry[0]?.changes?.length > 0 &&
 			data.entry[0].changes[0]?.field === "comments" && data.entry[0].changes[0].value?.parent_id === undefined) {
+			console.log("||||||||||||||||||||||||||||||||||     ReplyCommentAutomationV3    |||||||||||||||||||||||||||");
 
 			const postId = data.entry[0].changes[0].value?.media?.id;
 			const messageText = data.entry[0].changes[0].value?.text;
@@ -126,15 +127,11 @@ app.post('/insta', async (req, res) => {
 		}
 
 		if (data?.object === "instagram" && data?.entry?.[0]?.messaging?.length > 0) {
-			console.log("Ok");
+			console.log("||||||||||||||||||||||||||||||||||     ReplyDirectDM    |||||||||||||||||||||||||||");
 
 			const senderId = data.entry[0].messaging[0]?.sender?.id;
 			const recipientId = data.entry[0].messaging[0]?.recipient?.id;
 			const text = data.entry[0].messaging[0]?.message?.text;
-
-			console.log("Sender ID:", senderId);
-			console.log("Recipient ID:", recipientId);
-			console.log("Text:", text);
 
 			if (senderId && recipientId && text) {
 				const API_URLS = [
@@ -186,7 +183,8 @@ app.post('/insta', async (req, res) => {
 			data.entry[0]?.messaging?.length > 0 &&
 			data.entry[0].messaging[0]?.read
 		) {
-			console.log("Message read:", data.entry[0].messaging[0].read);
+			console.log("||||||||||||||||||||||||||||||||||     InstaDmReadState    |||||||||||||||||||||||||||");
+
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
 				"https://api-digitalwall.xploro.io/Instagram/InstaDmReadState",
@@ -234,6 +232,8 @@ app.post('/insta', async (req, res) => {
 			data.entry[0]?.messaging?.length > 0 &&
 			data.entry[0].messaging[0]?.message
 		) {
+			console.log("||||||||||||||||||||||||||||||||||     AddInstaDm    |||||||||||||||||||||||||||");
+
 			const senderId = data.entry[0].messaging[0].sender.id;
 			const receiverId = data.entry[0].messaging[0].recipient.id;
 			const messageId = data.entry[0].messaging[0].message.mid;
@@ -291,7 +291,6 @@ app.post('/insta/feed', (req, res) => {
 	console.log("POST   ---   /insta/feed => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
 	// Handle webhook events here
-
 
 	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
 	res.status(200).send('Event received');
