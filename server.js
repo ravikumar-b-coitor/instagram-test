@@ -315,9 +315,16 @@ app.post('/insta', async (req, res) => {
 				Message: message
 			};
 
-			Promise.allSettled(
-				API_URLS.map(url => axios.get(url, { params }))
-			)
+			Promise.allSettled([
+				axios.get('https://api-digitalwall.coitor.com/Instagram/AddInstaDm/', {
+					params: {
+						SenderId: senderId,
+						ReceiverId: receiverId,
+						MessageId: messageId,
+						Message: message
+					}
+				})
+			])
 				.then(results => {
 					results.forEach((result, index) => {
 						if (result.status === "fulfilled") {
