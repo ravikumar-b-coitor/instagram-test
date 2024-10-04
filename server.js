@@ -126,57 +126,6 @@ app.post('/insta', async (req, res) => {
 			console.error("Data structure does not match expected format.");
 		}
 
-		if (data?.object === "instagram" && data?.entry?.[0]?.messaging?.length > 0) {
-			console.log("||||||||||||||||||||||||||||||||||     ReplyDirectDM    |||||||||||||||||||||||||||");
-
-			const senderId = data.entry[0].messaging[0]?.sender?.id;
-			const recipientId = data.entry[0].messaging[0]?.recipient?.id;
-			const text = data.entry[0].messaging[0]?.message?.text;
-
-			if (senderId && recipientId && text) {
-				const API_URLS = [
-					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
-					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
-					// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
-				];
-
-				const formData = new FormData();
-				formData.append('SenderId', senderId);
-				formData.append('DmMessage', text);
-				formData.append('RecipientId', recipientId);
-
-				try {
-					// Prepare form data for each endpoint
-					const results = await Promise.allSettled(
-						API_URLS.map(url =>
-							axios.post(url, formData, {
-								headers: {
-									...formData.getHeaders(), // Use form-data's headers
-									'accept': 'application/json'
-								}
-							})
-						)
-					);
-
-					// Handle results from all endpoints
-					results.forEach((result, index) => {
-						if (result.status === 'fulfilled') {
-							console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-						} else {
-							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
-						}
-					});
-
-				} catch (error) {
-					console.error("Unexpected error:", error);
-				}
-			} else {
-				console.error("Missing required fields: SenderId, RecipientID, or text.");
-			}
-		} else {
-			console.error("Data structure does not match expected format or messaging is missing.");
-		}
-
 		if (
 			data?.object === "instagram" &&
 			data?.entry?.length > 0 &&
@@ -269,6 +218,57 @@ app.post('/insta', async (req, res) => {
 				});
 		} else {
 			console.log("Conditions not met or 'message' key is missing.");
+		}
+
+		if (data?.object === "instagram" && data?.entry?.[0]?.messaging?.length > 0) {
+			console.log("||||||||||||||||||||||||||||||||||     ReplyDirectDM    |||||||||||||||||||||||||||");
+
+			const senderId = data.entry[0].messaging[0]?.sender?.id;
+			const recipientId = data.entry[0].messaging[0]?.recipient?.id;
+			const text = data.entry[0].messaging[0]?.message?.text;
+
+			if (senderId && recipientId && text) {
+				const API_URLS = [
+					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
+					// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
+				];
+
+				const formData = new FormData();
+				formData.append('SenderId', senderId);
+				formData.append('DmMessage', text);
+				formData.append('RecipientId', recipientId);
+
+				try {
+					// Prepare form data for each endpoint
+					const results = await Promise.allSettled(
+						API_URLS.map(url =>
+							axios.post(url, formData, {
+								headers: {
+									...formData.getHeaders(), // Use form-data's headers
+									'accept': 'application/json'
+								}
+							})
+						)
+					);
+
+					// Handle results from all endpoints
+					results.forEach((result, index) => {
+						if (result.status === 'fulfilled') {
+							console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+						} else {
+							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+						}
+					});
+
+				} catch (error) {
+					console.error("Unexpected error:", error);
+				}
+			} else {
+				console.error("Missing required fields: SenderId, RecipientID, or text.");
+			}
+		} else {
+			console.error("Data structure does not match expected format or messaging is missing.");
 		}
 
 		res.status(200).send('Event received');
