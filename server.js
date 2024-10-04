@@ -78,7 +78,7 @@ app.post('/insta', async (req, res) => {
 
 			if (postId && messageText && commentId) {
 				const API_URLS = [
-					// "https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
+					"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
 					"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
 					// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
 				];
@@ -135,7 +135,7 @@ app.post('/insta', async (req, res) => {
 
 			if (senderId && recipientId && text) {
 				const API_URLS = [
-					// "https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
 					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
 					// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
 				];
@@ -186,7 +186,7 @@ app.post('/insta', async (req, res) => {
 			console.log("||||||||||||||||||||||||||||||||||     InstaDmReadState    |||||||||||||||||||||||||||");
 
 			const API_URLS = [
-				// "https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
+				"https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
 				"https://api-digitalwall.xploro.io/Instagram/InstaDmReadState",
 				// "https://api-digitalwall-demo.xploro.io/Instagram/InstaDmReadState"
 			];
@@ -240,7 +240,7 @@ app.post('/insta', async (req, res) => {
 			const message = data.entry[0].messaging[0].message.text;
 
 			const API_URLS = [
-				// "https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
+				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
 				"https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
 				// "https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
 			];
