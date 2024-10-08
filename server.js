@@ -9,6 +9,8 @@ const qs = require('qs');
 const app = express();
 const port = 3000;
 
+const data = require('./app.json');
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,7 +34,7 @@ const io = new Server(server, {
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-	res.send("Hello world...")
+	res.send(data)
 	// res.sendFile(__dirname + '/public/index.html');
 });
 
