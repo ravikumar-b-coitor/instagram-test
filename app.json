@@ -1,0 +1,282 @@
+{
+    "Status": 1,
+    "config": {
+        "BranchInfo": {
+            "BranchDetailKey": 230000419,
+            "PublicStore": false,
+            "BranchName": "Prince Jewellery-Bangalore 560011",
+            "WidgetKeys": "230000002,230000001,230000004,230000005",
+            "TotalGoogleReviewCount": 1480,
+            "GoogleAverageRating": 4.6,
+            "QRCodeURL": "https://search.google.com/local/writereview?placeid=ChIJbRLZtqIVrjsRfMgteRdO2vg",
+            "LayoutKey": 230000001,
+            "Layout": "Landscape",
+            "BusinessDetailKey": 230000068,
+            "BusinessName": "PRINCE JEWELLERY",
+            "WidgetConf": "{\"GoogleReview\": {\"UpdateTime\": 15, \"Count\": 20, \"WidgetKey\": 230000002}, \"Content\": {\"UpdateTime\": 50, \"Count\": 10, \"WidgetKey\": 230000001}, \"GoogleQrCode\": {\"UpdateTime\": 0, \"Count\": 1, \"WidgetKey\": 230000004}, \"GoldRate\": {\"UpdateTime\": 0, \"Count\": 1, \"WidgetKey\": 230000005}}",
+            "StoreDisplayName": "Prince Jewellery-Bangalore 560011",
+            "DisplayDetailKey": 230001073,
+            "BranchBGURL": null,
+            "LogoURL": "https://digital--wall--data.s3.us-east-2.amazonaws.com/PRINCE JEWELLERY/20240805110202241556.png",
+            "ColorTheme": "#981f23",
+            "Display": "TV"
+        },
+        "Widgets": [
+            "GoogleReview",
+            "Content",
+            "GoogleQrCode",
+            "GoldRate"
+        ],
+        "Webview": 1,
+        "WebTiming": 804
+    },
+    "Data": {
+        "InstaPostsImage": [],
+        "InstaPostsVideo": [],
+        "GoogleReviews": [
+            {
+                "Status": 1,
+                "ReviewComment": "WWYdVP04EwXTa8RruFkxZMHLYI3Gjw8WdtsqgmRkic6vlQlPFgAZ6x+KPMgdjj1phkOUBDaqO3yVb5OFwPBsx4yYxGvRLwEsQy3vE7uOU8ufk/BCaKDtdjlXk3yT7RC1SKjPzUNc7VaVXoSkjG2BLIKa4VbcYiQArIO2PYe1zWhw+to6IhZsPAqIVyDM3cZp5eg7g6Bz2idHzfsGLVXEbmapBMaLXpeR0VT4P4pfPxCGmxs3aiLVjw/dqEg8R3jFAZrdDRIxOq9II9Su/pCIu6IqJauNk743a/rBYSbtO9tF7H9CxhPTkah3Nd2wBEMlm6HEX0vnirlsUSPZyWsNNZuh53HTocZo5cDgmHHjcqkg7JEOGr9BlirS9dZlUsE+/S716KBVlL2wbeMbl25/JTDGXDzkU7omcEKiGl9VVf5Xv55r+V7NJqc/svpLrEFW",
+                "Highlight": [
+                    "good service"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-07T18:22:21",
+                "google_review": 470093791
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "9yUZWoIzKitzET/Bojn2u5fTVGW/9nOETGiV8jw6AxADvg70P7n4cPtwIlGKdX/YUJSJr1mf0mACkDgYVmzt+0RsUJRBoLYNQLBGxN3rqJNQvePzhTzBVG7yGO6iO7EH0ypBR03rxdpJt6pdVNeG9Y+FPTDZKnUpDlIIG5EywM0VOLLNJ1tv5qI0eclzSXM5j0HD6m/m/Ou7lxOIbw0E5OVqCo9S19TavcMH+mgZ0O5YBa86u2nUwpXOYPGsGfosieQ9wUBdd4uPhXAHp8mGgz/OMH/vYsWSSrSQ4fbfzEQ=",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-06T19:25:28",
+                "google_review": 470093618
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "WWYdVP04EwXTa8RruFkxZI0CnfEdc+LzwDuWZbvc4HsrPc4oz+pK4x93UA/39NxyaxcitbUmB0YA7k6XSE0BFo5S3HxXoqjceFc4KrT3wA+TiwNVHRTV4F9FoLTL13MqsWsuv5P+OsGGbGeqmIZ01bMl0As3138CwsuY4MLhlyQJGZU976uPrmFcFufZkl3oIzpTuMXmIlRZBqFaDXblXUbmj3kx7vkavDOmi1+RZNceAk/e/wHhe267gVwn9mEet+BF3Cd63RVz+jL98z7JJ8RcsVUMRGsLBp42AYW58wSqictNUyTzLRfK5JPDdRj0xFm528xPOa4FS6vR95WS0g==",
+                "Highlight": [
+                    "good service"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-06T17:41:24",
+                "google_review": 470085190
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "9yUZWoIzKitzET/Bojn2u5fTVGW/9nOETGiV8jw6AxADvg70P7n4cPtwIlGKdX/YUJSJr1mf0mACkDgYVmzt+0RsUJRBoLYNQLBGxN3rqJO/6dZucFy93esVLYKyEjrcfPVmQeJNgugU/3n8q3FX1MmgpiDjqMQnp7JT6OMZLclHSjpzuXA0jTcd+aQQx+hsOq4XytrTZohzpTSm44kJJmqtk+5H/V7gL7eFdUVGhM9GrBoiuNOLKh02u0CinhrtcxZbV5LmqWseY2VPNhYF1Q==",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-06T15:56:31",
+                "google_review": 470093476
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "gvucYDCTSHFZvbfHdOHsVmYUabLAO03s1eloqa7N5tlZaks4MeAlNnyC1CLbbLhK4LlhkN6dhKGU23M/T98XqPDs+rMNlVoc2SJqGViIp/53Gf4bJg5X+EPPB+KDQ/FjmI3gOHaBwqcnPY/NlShOij3PZ+brZN1T4HEM5glUqWp3FNqgVDl9k+UxwfpHjliB5+TgxS4rRAu0F5BQ8Wfn/GDaD2J367D92+0Zl2SYBmcG6S32Ic5xdvDXfj8JWNRtzmiyV60F4zNnVE3CrnqXyW13+p6cDfUwMWjgyRkPuYBS04jue8TNVyeRFwbXMhGmM1RkTneO5K11BB6yMmFbAQ==",
+                "Highlight": [
+                    "Good service"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-06T13:43:17",
+                "google_review": 470093424
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "UeQgfTEi27A3R4q6d1syCtOlavDXKnwWJTlLn4inTWIfsGtXrrQwAEZsNuoQNrPJhuKoDJkjdpdG9S6qd4FMHAgFqiJxCQ6AuBxkC0nr2DlkhgCCT5NF5Q4GoehPgSwCTpyMMePypr8wgDZSQcwQ33qezPQ0ymnkt3MHNAIHslXzzvFqvde9LruT1SvXC+Y5603jtO6Tb3p/sDMvW085GZsdcHEG4vKZ08LzCkCJhe5fZA/W/YJ8hUbyia7pJCaDzCBTApvDmizTMKWelfrFMwLu8Ewq5AIqvR3m8JkEyEBpR3/wbMJptxwFx07DwuLfM+GwdisTSZDmkDRPqm7Npg==",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-06T11:32:21",
+                "google_review": 240038288
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "9yUZWoIzKitzET/Bojn2u5fTVGW/9nOETGiV8jw6AxADvg70P7n4cPtwIlGKdX/YUJSJr1mf0mACkDgYVmzt+0RsUJRBoLYNQLBGxN3rqJNkEZLiV3PddfHbaS9iKYH8o1FnVMLEhn9PN9hpN00MhbH0TinIPQ1sJ1KRa1jlcQh3YYmMtk0kSwxYSMAtzPbM6p55n4bP0INtToj3+NlIcziDJEYLoqAx7Ofvy1l8eZbBYzFG2PJjgW2ubh+6qA930AxjEtYWP065aUqTdLdgLQ==",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T20:07:13",
+                "google_review": 470093257
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "n13nbgrgOOY/GAHU5VfoHa88kxATc1KXUPfZ7mSf/CgJoDeVBu5hzCjhnoHPVdbETgisV2nExCy8nnGPEUyJRC+zPqBE5jgSF5k93CZ1e1SWqo/lq1tWzmIPHMVzFtfdGhDh3CLmpXEkQ6q2ndUaV+o+6qGqyunJ5R+suapBwxta2P70qC3sVLlN9oBilWRWBIw5lg/Xeulr1nXRgEHhQQ1JFd5YY8F17Qi/u+848nQVD9R5CVtxXStxf+JKbke89YXirUXbCce5ioJrHovlBK3LtvGJq16j+YUSomc1CduNLOReC+TvV29ZglGuCdqGWwVmFBzPaZcruxxT1DHvGAOza6RDcfCeP+4E+unnK8Z2B0rFG2MOUj7EWE8UZHatqnUxpmgm5uUJRKnl+mrSNt/Dca58NLtQ2Dh4BgRpEN1yqSBL9YXBoEEbj6SiXml8eGxgH/Y0l42W0O0Avg0mFWIclm/C0MBWFkj4p74VFBzZtA3CsMjar/LeEcgPr/mPn4lhpk1YqkUeUux9PeuRp0au9BdZiWzz9bjj6sHuTUxLEAuAHjOmggMkW1RMeFL2R472VxO1pubYxUz59xOWNqB6Qi+IQ5EK3rixjPDf3fZETHJhLmBTrgXYX6KUNP2i+3JF2VUH4jqDFOmtVTa48ZsAbdjrrX905uD/UQvBX14uzpwc2EF3wj4hXvyxwSlhaPXiZo3hMcVD6I9PARWKtw==",
+                "Highlight": [
+                    "great help",
+                    "simple way",
+                    "pleasant experience"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T19:23:11",
+                "google_review": 470093259
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "9yUZWoIzKitzET/Bojn2u5fTVGW/9nOETGiV8jw6AxADvg70P7n4cPtwIlGKdX/YUJSJr1mf0mACkDgYVmzt+0RsUJRBoLYNQLBGxN3rqJPR6FU85xwzjijAqUdH0hbCB7269/VKPQ3bgXnGH7U0jYO+gd6F0sb0a0L0IDOjYk1MSvi0IZHz0WDUstjopVMQsAzSDJs076dT2mIK2XwcX5NhERqPf7H1VrnpJLiiiU6crMxHue775Asm7iOGeLn/twI0d5UoUVPDgo2pWhMctQ==",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T18:44:47",
+                "google_review": 470093208
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "gvucYDCTSHFZvbfHdOHsVqwqqdzJdQRo3uVGD33zu7g59+c7kYTDWcI33jt3Sl8T/FMtbztYgDsi2BeibTSU6AkuA4nBq/ktzoVNRNJ6+rvm2DIwv+5e1xG5K7lrcRvKTygkzcy5S0sg+SoGkBj/fdRYWvZoZD3tUyKYnXKgBeHCPk0D/CNgyWT18uaxue1ZDeM7b+htEyYCx+2at1OHEDRiw7JM83ZXwv/77XDcHiP2ynQJtkC2p4AsUYJl0KtGLVRgVr4Uk0M39XwzsLUlKb3/z3S6HP7ocDMCxnR46Ig=",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T18:39:55",
+                "google_review": 470093209
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "tGOd/fqC81S83qNSlmFNDXeAayj7b5fOhW7SH/3uvCLriyMivhPsR57obwOkRHDfK+LPjMnHsxQj96XeV6bf3MRFpaY+e1c+MdgBQ8u+fs3vu94kOuU6wtDooSU2o4Tudex4Sim4VXIxEPjmpoEV5RBpQGKn5199MKMlQIViajwUoihm2PR5HCphSg2IyLTWdRw133K+EskqHeubUZ4OgwsokhFl+pIDwWu0Dzdkp1o2kKryhb7ZmbHYvm6safnS0mYynCL6HJz2F+3zf8TQ0lJgwMSm7raXRBewSiz7unpQaJfkM1ZaDoAxHI5W3dzPCHlCZEpkuc46sJf7Pf0TIPnutluYOI7l3p6XomiaA5cmpaxk6UEPrb5C/61eaVPtFHhwyL32Rc2sUbmVkvjtdG7RavNW74Wnq0gLOQWSPEE=",
+                "Highlight": [
+                    "friendly"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T17:44:59",
+                "google_review": 240037935
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "HCo18p1f0o0pO1xw0V0ohnhgjyJIXZJ9k4oflIzgWnoHmcFtbV6/YnK14FgCpQoAZxP3oYFlsZWeFmcbiDibawMx85ejOdqNZ7mM59WoEugmr7y5XjEGJG4VBGOBeoD5dAR1PPwm8u2eA5XSnN1g9tqvmzi7CrRssm3UUqNqhavOayxZFxJOzzOKl/ggauAUxkJwak9wkVHwXMX6ABwdxny71eGM2CWdcZpqrpKgljunCXdTAVAAGpMJFheXF+UR2n2seCldQpZ4GGjpklXLo0Knouge1cOQBK4uItY8Bz6epIOF2arLPcmWknF+6eQs",
+                "Highlight": [
+                    "good staff"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T16:42:37",
+                "google_review": 470093160
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "HCo18p1f0o0pO1xw0V0ohnhgjyJIXZJ9k4oflIzgWnoHmcFtbV6/YnK14FgCpQoAZxP3oYFlsZWeFmcbiDibawMx85ejOdqNZ7mM59WoEugmr7y5XjEGJG4VBGOBeoD5nQ+3mFLBCWGbEqw1goIUn56z4gtSpfSAGBFvCt/stVB5iBJTRQPzZq9gUMYQG2SThYEfPv20kS6DjSteTA3DXFYda5kdQmve0oT8zGmcZaSMdtaigIQu3h6RuD+18m2YSzT8g78muVQL0uW2KZqIsyllCKcIdY26ZgQztRIe2HGUHBqrTpmEOi7DY0wQGGyF",
+                "Highlight": [
+                    "good staff"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T16:25:38",
+                "google_review": 470093161
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "M9n3afx2e8OJIv1q/19lOo4qFvVl7kYcDCiYKjtt1ZUtGA/GZHhZFjeKrLY28rSYOodA9F9/NeTx/JKMHSMG/DI33mSPbpEPni3/FeyW4eqkuiWGY3MK8gPTSQEzr+P9Us6/nOu843iBwxIVWVoE4WLOnV2Laj5GUYCYs7tjqTZsrwnkP2c3scLjrWZ+BYbf7m4o0lzq9cqzw8MFLH/12Qx/ECBM3JYBigpnABp70txo4Mkx76qQoUcJND2ryVjx+wnhW33CvyZ2A1tHnh275SKGe2pPNbhTkn3k8KrTGKNtAXY8kvBf2hWW/xZ6Fk89IdEk0Jqr8UcnFu+3cl/9ww==",
+                "Highlight": [
+                    "Nice service"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-05T11:17:04",
+                "google_review": 470093035
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "jNfxNBCoN61nx3zZnr6MR8DlREdn3jtVdc283hjFQu3z5RO8OQW+qfQzxj01t7DjoOiwYzmxu7a56nk2NPHi1xobVV70bfSggpNvj8miSKXi01wEX372S8RMYCjg5n+rzW5rOmXkOLmSBV8N2AStjkjisN3iIJM5Vk6Blv31i+CKWkQs9RBPjEOFQrNjADwq5xAHhUo96xK0LEqhI+++gKg2Z9uWZCGpTRFa0sB7QHgUTfEXAw/9r2rizsW6zpKjiJrMlt0I/mAisFn5oAsd5EAITX1gG1CCxiNdJHXqGS3cFUQ9aNWb76KYxISzU9V71dSfu2wUt6yM63ZNA5qrxmSdJcE7G7P3Yfir37JQmbE=",
+                "Highlight": [
+                    "Happy shopping"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-04T18:36:34",
+                "google_review": 470092944
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "UeQgfTEi27A3R4q6d1syCrv3FdzgkMt0J6RpzZPHVMF2NIvT33I/65GNNRmy/JPWqzFO3NDzgD+3ZRKR/00t/HKegHUsWnyw/Q/4u82SDZh1nJeP9N+RE4YRHAMyyGQKPOv74NRfBHWzmPO5RIgp2S05YuilUzM20260TD5Sadwrk5iZVCXf7+53+0ChOMv1m9ewsjzvn8TuJloPEjD3xDo0iCKG4sKnedfVThB+cK3rXS7JMeZqwhEZc3ePyXy/6o9leNeqhqwkhHYe6yCSLpJeb/c5c/Yr/SEjy5lSdTimtieRV1MQowzucl8zHGsfevf4xps+Om6MjG1oOAzbZBofh9PFmYwnvCVApSpPcQaT7ueutcqPm55ReNmxIFUPu1uahANrNDGSAWI9paaPQw==",
+                "Highlight": [
+                    "perfect set"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-04T17:18:29",
+                "google_review": 470092916
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "QJMNRV5VBrWFKtAAiyDysdwygJdttoutofV6pKqfaIr8E6WrTlayNjJ2Pgf4x3CYNGnWNSH2gpFDUFFPYe5US7+vxUndY3yXhWKJb5FkRWDF4DAyvm783S1rS+5hdf+AgPLWhvZ0mfSd7fBk22RcwiOdfVg18delnpieUYn4f3hOJ9ep06Oi0DQoZOjbsTg4G92qN/Af5DTvcpCi3cWXHRhWNdhAequpftF45SAooa/W1dsfPO195ftPr2/eODcpD2bDdFltz+qX+dm0yl5RRF4+5S0D6sI/goG9HJ+pf/ySLK8FtCVMUg7+67qKfDvcCyjPbQ8kZbCT/7EJ1+Z1QWGf99fuSI53dmmBHMCV1vAQP4fyQJlA37Muiozmt2lYS07oYvkz5lRc0cLUFh0aKw==",
+                "Highlight": [
+                    "Overall experience",
+                    "best service"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-03T20:38:38",
+                "google_review": 240038131
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "NcaFTQhR45UV7cy2G1qDbtT8ZWbIqM723zgh5sJb5JQjCbYTaeOCplZvrX+up6aoHWBtnkHrmwgTMv34sh0tXpCVgZ5uUAb8X1pejagxSIYFJk61OgTvnHH+EvvUNJ7XiPEP9aMOja2Cl/hZgtBWHK+YFH6l3/BdteWMFjzhOrjGZcuz+gCeqorRYUxvEZuLtECvfOjo53sN1YjwWYcIdEK+qLKT4unUf8dfY7gWRSRDOi72JMrFVc3s0eO58IjSGx7eWCYLt/A35SfG/epyyEPr0rdnmjcs6oJ7S8+7I3LpVlZu8waUuzf0clWJ9Z2pZYT3DJ2WOJ8I4xbnjeb0Dw==",
+                "Highlight": [
+                    "nice service",
+                    "friendly staff"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-03T19:23:40",
+                "google_review": 470092753
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "9yUZWoIzKitzET/Bojn2u5fTVGW/9nOETGiV8jw6AxADvg70P7n4cPtwIlGKdX/YUJSJr1mf0mACkDgYVmzt+0RsUJRBoLYNQLBGxN3rqJMGLX1MPjPeWX4ZPWxaQW0jzVdnjN5XJ5L6a+ayPmrhu0ryGIs6inFJVDvVVoy4EojszHY5t5c7bNo3Q5JT4LnyX8BWWGkzIteXNwnhfkNA59lC0OiUMek5wthP8IH4qL+Z73uMeG7jBCdRo64rdoPNPisnYZDyCDZ6M1I8kq4M9FFiGYIYOKlhGSlubRnISQ0=",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-02T19:33:27",
+                "google_review": 470092534
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "gvucYDCTSHFZvbfHdOHsVp/NlGSpjyP0XfJ6rnhtOa3H4NCEf1g8dQoLeOJRMYCxKmW+BaVfGfqqA5Wi1unQERJ9q2EzlAsbI1jNAbGINNVd8yrhkBAaq2Dcpop429uavdANdVOBPWKt9IrozWT/jI7zgt8R+aRwj/pT5QhSBM9wy9N8Rsvak3qiJvj2/B7uZl/NRe1FPsedn53uI4Psxsh+7QaTuhoYeV8U2sSFASKNIEyU49dSA/HuM2JAODKYJHlud+1LZS2k+GPRfI5ewimN/Zc3MKXWLEiblqnLzZD+Go+zanyt+vkB7qqL7EbaPUunkxco0inIuJ1uJw+QN2KKhbGTLBmyyGisJLPqUCU=",
+                "Highlight": [
+                    "Good collection",
+                    "friendly staff"
+                ],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-02T18:03:31",
+                "google_review": 470092461
+            },
+            {
+                "Status": 1,
+                "ReviewComment": "9yUZWoIzKitzET/Bojn2u5fTVGW/9nOETGiV8jw6AxADvg70P7n4cPtwIlGKdX/YUJSJr1mf0mACkDgYVmzt+0RsUJRBoLYNQLBGxN3rqJNpUZddcQUODM1gcG0ML87JgY8E0NVp+ZHHXNDcryZ4HW4L1lqoGLugmv8rTd3ZPm1HR+YAp5y/8qP17/tqZIqiQG/eGdyV4pt2YYlH7y1jWSQyaAMFAgtcYtZJID9MeS/pqYhfb0t/J9SmoAiBB1xOsFw5PYfn4JjY//OTeM+I4sJf/DzvE6JrOUyEOBMVS4w=",
+                "Highlight": [],
+                "Ratting": 5,
+                "ReviewTime": "2024-10-02T18:01:31",
+                "google_review": 470092460
+            }
+        ],
+        "Content": [
+            {
+                "ContentKey": 230000522,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/PRINCE JEWELLERY/20241004153849038820.mp4",
+                "FileSize": "101.6",
+                "FileName": "thumbnail1728036531.png",
+                "FileType": 1,
+                "Description": "LS1NEW",
+                "ContentCategoryName": "Generic",
+                "Duration": 87,
+                "OfferStartDate": null,
+                "OfferExpiryDate": null
+            },
+            {
+                "ContentKey": 230000456,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/PRINCE JEWELLERY/20240819223051820161.mp4",
+                "FileSize": "35.41",
+                "FileName": "thumbnail1724086852.png",
+                "FileType": 1,
+                "Description": "LS18",
+                "ContentCategoryName": "Default",
+                "Duration": 30,
+                "OfferStartDate": null,
+                "OfferExpiryDate": null
+            },
+            {
+                "ContentKey": 230000410,
+                "ContentURL": "https://d1gvu32nf0emj5.cloudfront.net/PRINCE JEWELLERY/20240805142833010884.mp4",
+                "FileSize": "108.3",
+                "FileName": "Flexi 100 - Final Ad 20231722828512.mp4",
+                "FileType": 2,
+                "Description": "LS1",
+                "ContentCategoryName": "Default",
+                "Duration": 30,
+                "OfferStartDate": null,
+                "OfferExpiryDate": null
+            }
+        ],
+        "HashtagLists": [],
+        "GoldRate": {},
+        "LatestData": {
+            "Reviews": [],
+            "InstaPosts": []
+        }
+    }
+}
