@@ -212,14 +212,14 @@ app.post('/insta', async (req, res) => {
 				.then(results => {
 					results.forEach((result, index) => {
 						if (result.status === "fulfilled") {
-							console.log(`Response from API ${index + 1}:`, result.value.data);
+							console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
 						} else {
-							console.error(`Error from API ${index + 1}:`, result.reason);
+							console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
 						}
 					});
 				});
 		} else {
-			console.log("Conditions not met or 'message' key is missing.");
+			console.log("Conditions not met or 'message' key is missing. AddInstaDm-----");
 		}
 
 		if (data?.object === "instagram" && data?.entry?.[0]?.messaging?.length > 0) {
