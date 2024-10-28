@@ -82,7 +82,7 @@ app.post('/insta', async (req, res) => {
 				const API_URLS = [
 					"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
 					"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
-					// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
 				];
 
 				const payload = {
@@ -139,7 +139,7 @@ app.post('/insta', async (req, res) => {
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
 				"https://api-digitalwall.xploro.io/Instagram/InstaDmReadState",
-				// "https://api-digitalwall-demo.xploro.io/Instagram/InstaDmReadState"
+				"https://api-digitalwall-demo.xploro.io/Instagram/InstaDmReadState"
 			];
 
 			const payload = {
@@ -193,7 +193,7 @@ app.post('/insta', async (req, res) => {
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
 				"https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
-				// "https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
+				"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
 			];
 
 			Promise.allSettled(
@@ -233,7 +233,7 @@ app.post('/insta', async (req, res) => {
 				const API_URLS = [
 					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
 					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
-					// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
+					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
 				];
 
 				const formData = new FormData();
