@@ -92,6 +92,13 @@ app.post('/insta', async (req, res) => {
 				CommentTime: commentEntry.created_time || 0
 			};
 
+			consolo.log(payload, `
+				
+				
+				
+				
+				`)
+
 			try {
 				// Send the payload to each API URL and wait for all promises to settle
 				const results = await Promise.allSettled(
