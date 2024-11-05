@@ -92,7 +92,7 @@ app.post('/insta', async (req, res) => {
 				CommentTime: commentEntry.created_time || 0
 			};
 
-			consolo.log(payload, `
+			console.log(payload, `
 				
 				
 				
