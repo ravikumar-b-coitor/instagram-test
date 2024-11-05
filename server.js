@@ -77,9 +77,9 @@ app.post('/insta', async (req, res) => {
 			const commentEntry = data.entry[0].changes[0].value;
 
 			const API_URLS = [
-				"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
-				"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
-				"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+				"https://api-digitalwall.coitor.com/Facebook/ReplyFBCommentAutomationV3",
+				"https://api-digitalwall.xploro.io/Facebook/ReplyFBCommentAutomationV3",
+				"https://api-digitalwall-demo.xploro.io/Facebook/ReplyFBCommentAutomationV3"
 			];
 
 			// Construct the payload for the API requests
