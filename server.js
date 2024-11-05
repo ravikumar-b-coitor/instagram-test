@@ -64,6 +64,69 @@ app.post('/insta', async (req, res) => {
 		// Handle webhook events here
 		const data = req.body;
 
+		if (
+			data &&
+			data.entry &&
+			Array.isArray(data.entry) &&
+			data.entry.length > 0 &&
+			data.entry[0].changes &&
+			Array.isArray(data.entry[0].changes) &&
+			data.entry[0].changes.length > 0 &&
+			data.entry[0].changes[0].value
+		) {
+			const commentEntry = data.entry[0].changes[0].value;
+
+			const API_URLS = [
+				"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
+				"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
+				"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+			];
+
+			// Construct the payload for the API requests
+			const payload = {
+				CommentID: String(commentEntry.comment_id) || "",
+				Message: String(commentEntry.message) || "",
+				PostId: String(commentEntry.post_id) || "",
+				RecipientID: String(commentEntry.from.id) || "",
+				RecipientName: String(commentEntry.from.name) || "",
+				CommentTime: commentEntry.created_time || 0
+			};
+
+			try {
+				// Send the payload to each API URL and wait for all promises to settle
+				const results = await Promise.allSettled(
+					API_URLS.map(url =>
+						axios.post(url, payload, { // No need to stringify here, axios handles JSON automatically
+							headers: {
+								'Content-Type': 'application/json',
+								'accept': 'application/json'
+							},
+						})
+					)
+				);
+
+				// Handle results from all endpoints
+				results.forEach((result, index) => {
+					if (result.status === 'fulfilled') {
+						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+					} else {
+						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+					}
+				});
+
+				console.log("New comment received and processed.");
+			} catch (error) {
+				console.error("Error while sending requests to APIs:", error.message);
+			}
+		} else {
+			console.error("Invalid input format received:", JSON.stringify(data));
+			return res.status(400).send('Invalid input format');
+		}
+
+		return res.status(200).send('Event received');
+
+		//------------
+
 		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
 		if (data?.object === "instagram" &&
 			data?.entry?.length > 0 &&
