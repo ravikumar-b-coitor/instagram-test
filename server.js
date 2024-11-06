@@ -120,7 +120,7 @@ app.post('/insta', async (req, res) => {
 			}
 		} else {
 			console.error("Invalid input format received:", JSON.stringify(data));
-			return res.status(400).send('Invalid input format');
+			// return res.status(400).send('Invalid input format');
 		}
 
 		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
