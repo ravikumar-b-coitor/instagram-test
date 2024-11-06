@@ -300,12 +300,12 @@ app.post('/insta', async (req, res) => {
 				formData.append('RecipientId', recipientId);
 
 				for (const url of API_URLS) {
-					let start = Date.now();
+					const start = Date.now(); // Record the start time before the request
 					try {
-						console.log()
+						console.log("ReplyDirectDM ------------------>", url)
 						const response = await axios.post(url, formData, {
 							headers: {
-								...formData.getHeaders(), // Use form-data's headers
+								...formData.getHeaders(),
 								'accept': 'application/json'
 							}
 						});
@@ -313,11 +313,12 @@ app.post('/insta', async (req, res) => {
 					} catch (error) {
 						console.error(`Error response from ${url}:`, error);
 					} finally {
-						console.log(start - Date.now())
+						const duration = Date.now() - start; // Calculate the duration
+						console.log(`Request to ${url} took ${duration}ms`);
 					}
 				}
 			} else {
-				console.error("Missing required fields: SenderId, RecipientID, or text.");
+				console.error("Missing required fields: SenderId, RecipientId, or text.");
 			}
 		} else {
 			console.error("Data structure does not match expected format or messaging is missing.");
