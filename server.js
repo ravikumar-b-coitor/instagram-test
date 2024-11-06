@@ -300,7 +300,9 @@ app.post('/insta', async (req, res) => {
 				formData.append('RecipientId', recipientId);
 
 				for (const url of API_URLS) {
+					let start = Date.now();
 					try {
+						console.log()
 						const response = await axios.post(url, formData, {
 							headers: {
 								...formData.getHeaders(), // Use form-data's headers
@@ -310,6 +312,8 @@ app.post('/insta', async (req, res) => {
 						console.log(`Success response from ${url}:`, response.data);
 					} catch (error) {
 						console.error(`Error response from ${url}:`, error);
+					} finally {
+						console.log(start - Date.now())
 					}
 				}
 			} else {
