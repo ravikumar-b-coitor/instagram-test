@@ -120,7 +120,6 @@ app.post('/insta', async (req, res) => {
 			}
 		} else {
 			console.error("Invalid input format received:", JSON.stringify(data));
-			// return res.status(400).send('Invalid input format');
 		}
 
 		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
@@ -290,8 +289,8 @@ app.post('/insta', async (req, res) => {
 
 			if (senderId && recipientId && text) {
 				const API_URLS = [
-					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
-					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
+					// "https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+					// "https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
 					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
 				];
 
