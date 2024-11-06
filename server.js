@@ -289,7 +289,7 @@ app.post('/insta', async (req, res) => {
 
 			if (senderId && recipientId && text) {
 				const API_URLS = [
-					// "https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
 					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
 					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
 				];
@@ -315,9 +315,9 @@ app.post('/insta', async (req, res) => {
 					// Handle results from all endpoints
 					results.forEach((result, index) => {
 						if (result.status === 'fulfilled') {
-							console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+							console.log(`-------------------------------->Success response from ${API_URLS[index]}:`, result.value.data);
 						} else {
-							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+							console.error(`-------------------------------->Error response from ${API_URLS[index]}:`, result.reason.message);
 						}
 					});
 
