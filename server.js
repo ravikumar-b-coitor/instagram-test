@@ -92,13 +92,6 @@ app.post('/insta', async (req, res) => {
 				CommentTime: commentEntry.created_time || 0
 			};
 
-			console.log(payload, `
-				
-				
-				
-				
-				`)
-
 			try {
 				// Send the payload to each API URL and wait for all promises to settle
 				const results = await Promise.allSettled(
@@ -129,10 +122,6 @@ app.post('/insta', async (req, res) => {
 			console.error("Invalid input format received:", JSON.stringify(data));
 			return res.status(400).send('Invalid input format');
 		}
-
-		return res.status(200).send('Event received');
-
-		//------------
 
 		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
 		if (data?.object === "instagram" &&
@@ -343,7 +332,7 @@ app.post('/insta', async (req, res) => {
 			console.error("Data structure does not match expected format or messaging is missing.");
 		}
 
-		res.status(200).send('Event received');
+		return res.status(200).send('Event received');
 	} catch (error) {
 		console.error("ErRrOr", error);
 	}
