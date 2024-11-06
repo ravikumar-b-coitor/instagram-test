@@ -317,7 +317,7 @@ app.post('/insta', async (req, res) => {
 						if (result.status === 'fulfilled') {
 							console.log(`-------------------------------->Success response from ${API_URLS[index]}:`, result.value.data);
 						} else {
-							console.error(`-------------------------------->Error response from ${API_URLS[index]}:`, result.reason.message);
+							console.error(`-------------------------------->Error response from ${API_URLS[index]}:`, result);
 						}
 					});
 
