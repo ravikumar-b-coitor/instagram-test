@@ -299,23 +299,43 @@ app.post('/insta', async (req, res) => {
 				formData.append('DmMessage', text);
 				formData.append('RecipientId', recipientId);
 
-				for (const url of API_URLS) {
-					const start = Date.now(); // Record the start time before the request
-					try {
-						console.log("ReplyDirectDM ------------------>", url)
-						const response = await axios.post(url, formData, {
-							headers: {
-								...formData.getHeaders(),
-								'accept': 'application/json'
-							}
-						});
-						console.log(`Success response from ${url}:`, response.data);
-					} catch (error) {
-						console.error(`Error response from ${url}:`, error);
-					} finally {
-						const duration = Date.now() - start; // Calculate the duration
-						console.log(`Request to ${url} took ${duration}ms`);
-					}
+				try {
+					// First API call
+					const response1 = await axios.post(API_URLS[0], formData, {
+						headers: {
+							...formData.getHeaders(),
+							'accept': 'application/json'
+						}
+					});
+					console.log(`Success response from ${API_URLS[0]}:`, response1.data);
+				} catch (error) {
+					console.error(`Error response from ${API_URLS[0]}:`, error);
+				}
+
+				try {
+					// Second API call
+					const response2 = await axios.post(API_URLS[1], formData, {
+						headers: {
+							...formData.getHeaders(),
+							'accept': 'application/json'
+						}
+					});
+					console.log(`Success response from ${API_URLS[1]}:`, response2.data);
+				} catch (error) {
+					console.error(`Error response from ${API_URLS[1]}:`, error);
+				}
+
+				try {
+					// Third API call
+					const response3 = await axios.post(API_URLS[2], formData, {
+						headers: {
+							...formData.getHeaders(),
+							'accept': 'application/json'
+						}
+					});
+					console.log(`Success response from ${API_URLS[2]}:`, response3.data);
+				} catch (error) {
+					console.error(`Error response from ${API_URLS[2]}:`, error);
 				}
 			} else {
 				console.error("Missing required fields: SenderId, RecipientId, or text.");
