@@ -289,9 +289,9 @@ app.post('/insta', async (req, res) => {
 
 			if (senderId && recipientId && text) {
 				const API_URLS = [
-					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+					// "https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
 					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
-					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
+					// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
 				];
 
 				const formData = new FormData();
