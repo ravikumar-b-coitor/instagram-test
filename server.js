@@ -235,50 +235,50 @@ app.post('/insta', async (req, res) => {
 			console.log("Conditions not met or 'read' key is missing.");
 		}
 
-		// if (
-		// 	data?.object === "instagram" &&
-		// 	data?.entry?.length > 0 &&
-		// 	data.entry[0]?.messaging?.length > 0 &&
-		// 	data.entry[0].messaging[0]?.message
-		// ) {
-		// 	console.log("||||||||||||||||||||||||||||||||||     AddInstaDm    |||||||||||||||||||||||||||");
+		if (
+			data?.object === "instagram" &&
+			data?.entry?.length > 0 &&
+			data.entry[0]?.messaging?.length > 0 &&
+			data.entry[0].messaging[0]?.message
+		) {
+			console.log("||||||||||||||||||||||||||||||||||     AddInstaDm    |||||||||||||||||||||||||||");
 
-		// 	const senderId = data.entry[0].messaging[0].sender.id;
-		// 	const receiverId = data.entry[0].messaging[0].recipient.id;
-		// 	const messageId = data.entry[0].messaging[0].message.mid;
-		// 	const message = data.entry[0].messaging[0].message.text;
+			const senderId = data.entry[0].messaging[0].sender.id;
+			const receiverId = data.entry[0].messaging[0].recipient.id;
+			const messageId = data.entry[0].messaging[0].message.mid;
+			const message = data.entry[0].messaging[0].message.text;
 
-		// 	const API_URLS = [
-		// 		"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
-		// 		"https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
-		// 		"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
-		// 	];
+			const API_URLS = [
+				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
+				"https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
+				"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
+			];
 
-		// 	Promise.allSettled(
-		// 		API_URLS.map(url => {
-		// 			console.log(`Making request to: ${url}`);
-		// 			return axios.get(url, {
-		// 				params: {
-		// 					SenderId: senderId,
-		// 					ReceiverId: receiverId,
-		// 					MessageId: messageId,
-		// 					Message: message
-		// 				}
-		// 			});
-		// 		})
-		// 	)
-		// 		.then(results => {
-		// 			results.forEach((result, index) => {
-		// 				if (result.status === "fulfilled") {
-		// 					console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
-		// 				} else {
-		// 					console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
-		// 				}
-		// 			});
-		// 		});
-		// } else {
-		// 	console.log("Conditions not met or 'message' key is missing. AddInstaDm-----");
-		// }
+			Promise.allSettled(
+				API_URLS.map(url => {
+					console.log(`Making request to: ${url}`);
+					return axios.get(url, {
+						params: {
+							SenderId: senderId,
+							ReceiverId: receiverId,
+							MessageId: messageId,
+							Message: message
+						}
+					});
+				})
+			)
+				.then(results => {
+					results.forEach((result, index) => {
+						if (result.status === "fulfilled") {
+							console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
+						} else {
+							console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
+						}
+					});
+				});
+		} else {
+			console.log("Conditions not met or 'message' key is missing. AddInstaDm-----");
+		}
 
 		if (data?.object === "instagram" && data?.entry?.[0]?.messaging?.length > 0) {
 			console.log("||||||||||||||||||||||||||||||||||     ReplyDirectDM    |||||||||||||||||||||||||||");
@@ -299,30 +299,18 @@ app.post('/insta', async (req, res) => {
 				formData.append('DmMessage', text);
 				formData.append('RecipientId', recipientId);
 
-				try {
-					// Prepare form data for each endpoint
-					const results = await Promise.allSettled(
-						API_URLS.map(url =>
-							axios.post(url, formData, {
-								headers: {
-									...formData.getHeaders(), // Use form-data's headers
-									'accept': 'application/json'
-								}
-							})
-						)
-					);
-
-					// Handle results from all endpoints
-					results.forEach((result, index) => {
-						if (result.status === 'fulfilled') {
-							console.log(`-------------------------------->Success response from ${API_URLS[index]}:`, result.value.data);
-						} else {
-							console.error(`-------------------------------->Error response from ${API_URLS[index]}:`, result);
-						}
-					});
-
-				} catch (error) {
-					console.error("Unexpected error:", error);
+				for (const url of API_URLS) {
+					try {
+						const response = await axios.post(url, formData, {
+							headers: {
+								...formData.getHeaders(), // Use form-data's headers
+								'accept': 'application/json'
+							}
+						});
+						console.log(`Success response from ${url}:`, response.data);
+					} catch (error) {
+						console.error(`Error response from ${url}:`, error);
+					}
 				}
 			} else {
 				console.error("Missing required fields: SenderId, RecipientID, or text.");
