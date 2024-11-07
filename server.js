@@ -67,6 +67,57 @@ app.post('/insta', async (req, res) => {
 			data.entry &&
 			Array.isArray(data.entry) &&
 			data.entry.length > 0 &&
+			data.entry[0].messaging &&
+			Array.isArray(data.entry[0].messaging) &&
+			data.entry[0].messaging.length > 0 &&
+			data.entry[0].messaging[0].message &&
+			data.entry[0].messaging[0].message.text
+		) {
+			const payload = {
+				Message: data.entry[0].messaging[0].message.text,
+				SenderId: data.entry[0].messaging[0].sender.id,
+				ReceiverId: data.entry[0].messaging[0].recipient.id,
+				MessageId: data.entry[0].messaging[0].message.mid,
+			};
+
+			const API_URLS = [
+				"https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
+				"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
+				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
+			];
+
+			try {
+				const results = await Promise.allSettled(
+					API_URLS.map(url =>
+						axios.post(url, payload, {
+							headers: {
+								'Content-Type': 'application/json',
+								'accept': 'application/json'
+							},
+						})
+					)
+				);
+
+				// Handle results from all endpoints
+				results.forEach((result, index) => {
+					if (result.status === 'fulfilled') {
+						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+					} else {
+						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+					}
+				});
+
+				console.log("New comment read and processed...");
+			} catch (error) {
+				console.error("Unexpected error:", error);
+			}
+		}
+
+		if (
+			data &&
+			data.entry &&
+			Array.isArray(data.entry) &&
+			data.entry.length > 0 &&
 			data.entry[0].changes &&
 			Array.isArray(data.entry[0].changes) &&
 			data.entry[0].changes.length > 0 &&
@@ -304,51 +355,9 @@ app.post('/insta', async (req, res) => {
 						console.log(`Success response from ${url}:`, response);
 					} catch (error) {
 						console.error(`Error response from ${url}:`, error);
-					} finally {
-						console.log(` 
-						.....	
-							`)
 					}
 				}
 
-				// try {
-				// 	// First API call
-				// 	const response1 = await axios.post(API_URLS[0], formData, {
-				// 		headers: {
-				// 			...formData.getHeaders(),
-				// 			'accept': 'application/json'
-				// 		}
-				// 	});
-				// 	console.log(`Success response from ${API_URLS[0]}:`, response1.data);
-				// } catch (error) {
-				// 	console.error(`Error response from ${API_URLS[0]}:`, error);
-				// }
-
-				// try {
-				// 	// Second API call
-				// 	const response2 = await axios.post(API_URLS[1], formData, {
-				// 		headers: {
-				// 			...formData.getHeaders(),
-				// 			'accept': 'application/json'
-				// 		}
-				// 	});
-				// 	console.log(`Success response from ${API_URLS[1]}:`, response2.data);
-				// } catch (error) {
-				// 	console.error(`Error response from ${API_URLS[1]}:`, error);
-				// }
-
-				// try {
-				// 	// Third API call
-				// 	const response3 = await axios.post(API_URLS[2], formData, {
-				// 		headers: {
-				// 			...formData.getHeaders(),
-				// 			'accept': 'application/json'
-				// 		}
-				// 	});
-				// 	console.log(`Success response from ${API_URLS[2]}:`, response3.data);
-				// } catch (error) {
-				// 	console.error(`Error response from ${API_URLS[2]}:`, error);
-				// }
 			} else {
 				console.error("Missing required fields: SenderId, RecipientId, or text.");
 			}
