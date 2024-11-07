@@ -81,18 +81,16 @@ app.post('/insta', async (req, res) => {
 
 			const API_URLS = [
 				// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
-				"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
+				// "https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
 				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 			];
 
 			try {
 				// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-				let b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+				// let b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 				let c = await axios.get(`${API_URLS[2]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 
 				console.log(`
-					
-					`, b, `
 					
 					`, c)
 			} catch (error) {
