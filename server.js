@@ -85,19 +85,60 @@ app.post('/insta', async (req, res) => {
 				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 			];
 
+
+			function makeApiCall(url, params) {
+				return new Promise((resolve, reject) => {
+					const urlObj = new URL(url);
+					urlObj.searchParams.set('SenderId', params.SenderId);
+					urlObj.searchParams.set('ReceiverId', params.ReceiverId);
+					urlObj.searchParams.set('MessageId', params.MessageId);
+					urlObj.searchParams.set('Message', params.Message);
+
+					const req = https.get(urlObj, (res) => {
+						let data = '';
+
+						// A chunk of data has been received.
+						res.on('data', (chunk) => {
+							data += chunk;
+						});
+
+						// The whole response has been received.
+						res.on('end', () => {
+							if (res.statusCode === 200) {
+								resolve(JSON.parse(data));  // Resolve with the response data
+							} else {
+								reject(new Error(`API call failed with status: ${res.statusCode}`));  // Reject on non-200 status
+							}
+						});
+					});
+
+					// Handle errors with the request
+					req.on('error', (err) => {
+						reject(err);
+					});
+
+					req.end();
+				});
+			}
+
 			try {
-				// Create an array of promises for each API call
+				// Prepare promises for all API calls
 				const apiCalls = API_URLS.map(url =>
-					axios.get(`${url}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+					makeApiCall(url, {
+						SenderId,
+						ReceiverId,
+						MessageId,
+						Message
+					})
 				);
 
 				// Wait for all promises to settle (resolve or reject)
-				const results = await Promise.all(apiCalls);
+				const results = await Promise.allSettled(apiCalls);
 
 				// Handle the results
 				results.forEach((result, index) => {
 					if (result.status === 'fulfilled') {
-						console.log(`API call ${index + 1} succeeded with data:`, result.value.data);
+						console.log(`API call ${index + 1} succeeded with data:`, result.value);
 					} else {
 						console.error(`API call ${index + 1} failed with reason:`, result.reason.message);
 					}
