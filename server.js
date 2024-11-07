@@ -73,12 +73,11 @@ app.post('/insta', async (req, res) => {
 			data.entry[0].messaging[0].message &&
 			data.entry[0].messaging[0].message.text
 		) {
-			const payload = {
-				Message: data.entry[0].messaging[0].message.text,
-				SenderId: data.entry[0].messaging[0].sender.id,
-				ReceiverId: data.entry[0].messaging[0].recipient.id,
-				MessageId: data.entry[0].messaging[0].message.mid,
-			};
+
+			let Message = data.entry[0].messaging[0].message.text
+			let SenderId = data.entry[0].messaging[0].sender.id
+			let ReceiverId = data.entry[0].messaging[0].recipient.id
+			let MessageId = data.entry[0].messaging[0].message.mid
 
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
@@ -87,39 +86,16 @@ app.post('/insta', async (req, res) => {
 			];
 
 			try {
-				const results = await Promise.allSettled(
-					API_URLS.map(url => {
-						const params = {
-							SenderId: encodeURIComponent(payload.SenderId),
-							ReceiverId: encodeURIComponent(payload.ReceiverId),
-							MessageId: encodeURIComponent(payload.MessageId),
-							Message: encodeURIComponent(payload.Message),
-						};
+				const response = axios.get(`https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`);
 
-						return axios.get(url, {
-							params,
-							headers: {
-								'Content-Type': 'application/x-www-form-urlencoded',
-								'Accept': 'application/json',
-							},
-						});
-					})
-				);
-
-				// Handle results from all endpoints
-				results.forEach((result, index) => {
-					if (result.status === 'fulfilled') {
-						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-					} else {
-						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
-					}
-				});
-
-				console.log("New comment read and processed...");
+				console.log("..................",response);
+				return;
 			} catch (error) {
-				console.error("Unexpected error:", error);
+				console.log("Error", error)
 			}
 		}
+
+		return;
 
 		if (
 			data &&
