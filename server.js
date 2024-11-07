@@ -4,6 +4,7 @@ const { createServer } = require('http');
 const { Server } = require('socket.io');
 const FormData = require('form-data');
 const axios = require("axios");
+const https = require('https');
 const cors = require('cors');
 const qs = require('qs');
 const app = express();
@@ -14,9 +15,6 @@ const data = require('./app.json');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-// const API_URL = "https://api-digitalwall.coitor.com/"
-const API_URL = "https://api-digitalwall.xploro.io/";
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -299,44 +297,58 @@ app.post('/insta', async (req, res) => {
 				formData.append('DmMessage', text);
 				formData.append('RecipientId', recipientId);
 
-				try {
-					// First API call
-					const response1 = await axios.post(API_URLS[0], formData, {
-						headers: {
-							...formData.getHeaders(),
-							'accept': 'application/json'
-						}
-					});
-					console.log(`Success response from ${API_URLS[0]}:`, response1.data);
-				} catch (error) {
-					console.error(`Error response from ${API_URLS[0]}:`, error);
+
+				for (const url of API_URLS) {
+					try {
+						const response = await postRequest(url, senderId, recipientId, text);
+						console.log(`Success response from ${url}:`, response);
+					} catch (error) {
+						console.error(`Error response from ${url}:`, error);
+					} finally {
+						console.log(` 
+						.....	
+							`)
+					}
 				}
 
-				try {
-					// Second API call
-					const response2 = await axios.post(API_URLS[1], formData, {
-						headers: {
-							...formData.getHeaders(),
-							'accept': 'application/json'
-						}
-					});
-					console.log(`Success response from ${API_URLS[1]}:`, response2.data);
-				} catch (error) {
-					console.error(`Error response from ${API_URLS[1]}:`, error);
-				}
+				// try {
+				// 	// First API call
+				// 	const response1 = await axios.post(API_URLS[0], formData, {
+				// 		headers: {
+				// 			...formData.getHeaders(),
+				// 			'accept': 'application/json'
+				// 		}
+				// 	});
+				// 	console.log(`Success response from ${API_URLS[0]}:`, response1.data);
+				// } catch (error) {
+				// 	console.error(`Error response from ${API_URLS[0]}:`, error);
+				// }
 
-				try {
-					// Third API call
-					const response3 = await axios.post(API_URLS[2], formData, {
-						headers: {
-							...formData.getHeaders(),
-							'accept': 'application/json'
-						}
-					});
-					console.log(`Success response from ${API_URLS[2]}:`, response3.data);
-				} catch (error) {
-					console.error(`Error response from ${API_URLS[2]}:`, error);
-				}
+				// try {
+				// 	// Second API call
+				// 	const response2 = await axios.post(API_URLS[1], formData, {
+				// 		headers: {
+				// 			...formData.getHeaders(),
+				// 			'accept': 'application/json'
+				// 		}
+				// 	});
+				// 	console.log(`Success response from ${API_URLS[1]}:`, response2.data);
+				// } catch (error) {
+				// 	console.error(`Error response from ${API_URLS[1]}:`, error);
+				// }
+
+				// try {
+				// 	// Third API call
+				// 	const response3 = await axios.post(API_URLS[2], formData, {
+				// 		headers: {
+				// 			...formData.getHeaders(),
+				// 			'accept': 'application/json'
+				// 		}
+				// 	});
+				// 	console.log(`Success response from ${API_URLS[2]}:`, response3.data);
+				// } catch (error) {
+				// 	console.error(`Error response from ${API_URLS[2]}:`, error);
+				// }
 			} else {
 				console.error("Missing required fields: SenderId, RecipientId, or text.");
 			}
@@ -349,6 +361,49 @@ app.post('/insta', async (req, res) => {
 		console.error("ErRrOr", error);
 	}
 });
+
+async function postRequest(url, senderId, recipientId, text) {
+	const boundary = `----WebKitFormBoundary${Math.random().toString(36).substring(7)}`;
+	const formData = [
+		`--${boundary}`,
+		`Content-Disposition: form-data; name="SenderId"\r\n\r\n${senderId}`,
+		`--${boundary}`,
+		`Content-Disposition: form-data; name="DmMessage"\r\n\r\n${text}`,
+		`--${boundary}`,
+		`Content-Disposition: form-data; name="RecipientId"\r\n\r\n${recipientId}`,
+		`--${boundary}--`
+	].join('\r\n');
+
+	const options = {
+		method: 'POST',
+		headers: {
+			'Content-Type': `multipart/form-data; boundary=${boundary}`,
+			'Content-Length': Buffer.byteLength(formData),
+			'accept': 'application/json'
+		}
+	};
+
+	return new Promise((resolve, reject) => {
+		const req = https.request(url, options, (res) => {
+			let data = '';
+
+			res.on('data', (chunk) => {
+				data += chunk;
+			});
+
+			res.on('end', () => {
+				resolve(JSON.parse(data));
+			});
+		});
+
+		req.on('error', (error) => {
+			reject(error);
+		});
+
+		req.write(formData);
+		req.end();
+	});
+}
 
 app.post('/insta/feed', (req, res) => {
 	console.log("POST   ---   /insta/feed => ", 'Params:', req.params, 'Query:', req.query);
