@@ -97,9 +97,9 @@ app.post('/insta', async (req, res) => {
 				// Handle the results
 				results.forEach((result, index) => {
 					if (result.status === 'fulfilled') {
-						console.log(`API call ${index + 1} succeeded with data:`, result.value);
+						console.log(`API call ${index + 1} succeeded with data:`, result.value.data);
 					} else {
-						console.log(`API call ${index + 1} failed with reason:`, result.reason);
+						console.error(`API call ${index + 1} failed with reason:`, result.reason.message);
 					}
 				});
 
