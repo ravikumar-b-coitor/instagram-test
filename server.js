@@ -86,6 +86,8 @@ app.post('/insta', async (req, res) => {
 				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 			];
 
+			console.log(payload, "...");
+
 			try {
 				const results = await Promise.allSettled(
 					API_URLS.map(url =>
