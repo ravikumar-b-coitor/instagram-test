@@ -86,9 +86,9 @@ app.post('/insta', async (req, res) => {
 			];
 
 			try {
-				const response = axios.get(`https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`);
+				const response = await axios.get(`https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`);
 
-				console.log("..................",response);
+				console.log("..................", response);
 				return;
 			} catch (error) {
 				console.log("Error", error)
