@@ -6,11 +6,8 @@ const FormData = require('form-data');
 const axios = require("axios");
 const https = require('https');
 const cors = require('cors');
-const qs = require('qs');
 const app = express();
 const port = 3000;
-
-const data = require('./app.json');
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -30,11 +27,7 @@ const io = new Server(server, {
 });
 
 app.use(express.static('public'));
-
-app.get('/', (req, res) => {
-	res.send("Hello")
-	// res.sendFile(__dirname + '/public/index.html');
-});
+app.get('/', (req, res) => res.send("Hello World!"));
 
 io.on('connection', (socket) => {
 	console.log('a user connected');
@@ -57,137 +50,171 @@ app.get('/insta', (req, res) => {
 
 app.post('/insta', async (req, res) => {
 	try {
-		console.log("POST   ---   Instagram => ", 'Params:', req.params, 'Query:', req.query);
-		console.log('Body:', JSON.stringify(req.body));
-		// Handle webhook events here
 		const data = req.body;
+		console.log('Data : ', JSON.stringify(data));
 
-		if (
-			data &&
-			data.entry &&
-			Array.isArray(data.entry) &&
-			data.entry.length > 0 &&
-			data.entry[0].messaging &&
-			Array.isArray(data.entry[0].messaging) &&
-			data.entry[0].messaging.length > 0 &&
-			data.entry[0].messaging[0].message &&
-			data.entry[0].messaging[0].message.text
-		) {
-
-			let Message = data.entry[0].messaging[0].message.text
-			let SenderId = data.entry[0].messaging[0].sender.id
-			let ReceiverId = data.entry[0].messaging[0].recipient.id
-			let MessageId = data.entry[0].messaging[0].message.mid
-
-			const API_URLS = [
-				"https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
-				"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
-				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
-			];
-
-			try {
-				let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-				let b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-				let c = await axios.get(`${API_URLS[2]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-
-				console.log(a, `
-					
-					`, b, `
-					
-					`, c)
-			} catch (error) {
-				console.log("Error in the overall process:", error);
-			}
-		}
-
-		return;
-
-		if (
-			data &&
-			data.entry &&
-			Array.isArray(data.entry) &&
-			data.entry.length > 0 &&
-			data.entry[0].changes &&
-			Array.isArray(data.entry[0].changes) &&
-			data.entry[0].changes.length > 0 &&
-			data.entry[0].changes[0].value
-		) {
-			const commentEntry = data.entry[0].changes[0].value;
-
-			const API_URLS = [
-				"https://api-digitalwall.coitor.com/Facebook/ReplyFBCommentAutomationV3",
-				"https://api-digitalwall.xploro.io/Facebook/ReplyFBCommentAutomationV3",
-				"https://api-digitalwall-demo.xploro.io/Facebook/ReplyFBCommentAutomationV3"
-			];
-
-			// Construct the payload for the API requests
-			const payload = {
-				CommentID: String(commentEntry.comment_id) || "",
-				Message: String(commentEntry.message) || "",
-				PostId: String(commentEntry.post_id) || "",
-				RecipientID: String(commentEntry.from.id) || "",
-				RecipientName: String(commentEntry.from.name) || "",
-				CommentTime: commentEntry.created_time || 0
-			};
-
-			try {
-				// Send the payload to each API URL and wait for all promises to settle
-				const results = await Promise.allSettled(
-					API_URLS.map(url =>
-						axios.post(url, payload, { // No need to stringify here, axios handles JSON automatically
-							headers: {
-								'Content-Type': 'application/json',
-								'accept': 'application/json'
-							},
-						})
-					)
-				);
-
-				// Handle results from all endpoints
-				results.forEach((result, index) => {
-					if (result.status === 'fulfilled') {
-						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-					} else {
-						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
-					}
-				});
-
-				console.log("New comment received and processed.");
-			} catch (error) {
-				console.error("Error while sending requests to APIs:", error.message);
-			}
-		} else {
-			console.error("Invalid input format received:", JSON.stringify(data));
-		}
-
-		io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
-		if (data?.object === "instagram" &&
-			data?.entry?.length > 0 &&
-			data.entry[0]?.changes?.length > 0 &&
-			data.entry[0].changes[0]?.field === "comments" && data.entry[0].changes[0].value?.parent_id === undefined) {
-			console.log("||||||||||||||||||||||||||||||||||     ReplyCommentAutomationV3    |||||||||||||||||||||||||||");
-
-			const postId = data.entry[0].changes[0].value?.media?.id;
-			const messageText = data.entry[0].changes[0].value?.text;
-			const commentId = data.entry[0]?.changes[0].value?.id;
-			const RecipientID = data.entry[0]?.changes[0].value?.from.id;
-			const RecipientName = data.entry[0]?.changes[0].value?.from.username;
-			const time = data.entry[0]?.time;
-
-			if (postId && messageText && commentId) {
+		if (data?.object !== "page" && data?.object !== "instagram") return;
+		if (data?.object === "page") {
+			if (
+				data &&
+				data.entry &&
+				Array.isArray(data.entry) &&
+				data.entry.length > 0 &&
+				data.entry[0].messaging &&
+				Array.isArray(data.entry[0].messaging) &&
+				data.entry[0].messaging.length > 0 &&
+				data.entry[0].messaging[0].message &&
+				data.entry[0].messaging[0].message.text
+			) {
 				const API_URLS = [
-					"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
-					"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
-					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+					// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
+					// "https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
+					"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
+				];
+
+				try {
+					let Message = data.entry[0].messaging[0].message.text
+					let SenderId = data.entry[0].messaging[0].sender.id
+					let ReceiverId = data.entry[0].messaging[0].recipient.id
+					let MessageId = data.entry[0].messaging[0].message.mid
+
+					const url = `${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`
+
+					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+					// let b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+
+					const c = await axios.get(url)
+
+					console.log(`
+						
+						`, c.status)
+				} catch (error) {
+					console.log("Error in the overall process:", error);
+				}
+			}
+
+			if (
+				data &&
+				data.entry &&
+				Array.isArray(data.entry) &&
+				data.entry.length > 0 &&
+				data.entry[0].changes &&
+				Array.isArray(data.entry[0].changes) &&
+				data.entry[0].changes.length > 0 &&
+				data.entry[0].changes[0].value
+			) {
+				const commentEntry = data.entry[0].changes[0].value;
+
+				const API_URLS = [
+					"https://api-digitalwall.coitor.com/Facebook/ReplyFBCommentAutomationV3",
+					"https://api-digitalwall.xploro.io/Facebook/ReplyFBCommentAutomationV3",
+					"https://api-digitalwall-demo.xploro.io/Facebook/ReplyFBCommentAutomationV3"
+				];
+
+				// Construct the payload for the API requests
+				const payload = {
+					CommentID: String(commentEntry.comment_id) || "",
+					Message: String(commentEntry.message) || "",
+					PostId: String(commentEntry.post_id) || "",
+					RecipientID: String(commentEntry.from.id) || "",
+					RecipientName: String(commentEntry.from.name) || "",
+					CommentTime: commentEntry.created_time || 0
+				};
+
+				try {
+					// Send the payload to each API URL and wait for all promises to settle
+					const results = await Promise.allSettled(
+						API_URLS.map(url =>
+							axios.post(url, payload, { // No need to stringify here, axios handles JSON automatically
+								headers: {
+									'Content-Type': 'application/json',
+									'accept': 'application/json'
+								},
+							})
+						)
+					);
+
+					// Handle results from all endpoints
+					results.forEach((result, index) => {
+						if (result.status === 'fulfilled') {
+							console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+						} else {
+							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+						}
+					});
+				} catch (error) {
+					console.error("Error while sending requests to APIs:", error.message);
+				}
+			} else {
+				console.error("Invalid input format received:", JSON.stringify(data));
+			}
+		} else if (data?.object === "instagram") {
+			if (data?.entry[0]?.changes && data?.entry[0]?.changes[0]?.field === "comments") {
+				console.log("------------------------------------------------------------------     ReplyCommentAutomationV3     ------------------------------------------------------------------");
+
+				const postId = data.entry[0].changes[0].value?.media?.id;
+				const messageText = data.entry[0].changes[0].value?.text;
+				const commentId = data.entry[0]?.changes[0].value?.id;
+				const recipientID = data.entry[0]?.changes[0].value?.from.id;
+				const recipientName = data.entry[0]?.changes[0].value?.from.username;
+				const time = data.entry[0]?.time;
+
+				if (postId && messageText && commentId) {
+					const API_URLS = [
+						"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
+						"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
+						"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+					];
+
+					const payload = {
+						PostId: postId.toString(),
+						Message: messageText,
+						RecipientID: recipientID,
+						RecipientName: recipientName,
+						CommentTime: Number(time),
+						CommentID: commentId,
+					};
+
+					try {
+						const results = await Promise.allSettled(
+							API_URLS.map(url =>
+								axios.post(url, JSON.stringify(payload), {
+									headers: {
+										'Content-Type': 'application/json',
+										'accept': 'application/json'
+									},
+								})
+							)
+						);
+
+						// Handle results from all endpoints
+						results.forEach((result, index) => {
+							if (result.status === 'fulfilled') {
+								console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+							} else {
+								console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+							}
+						});
+
+						// XXX
+					} catch (error) {
+						console.error("Error: Instagram/ReplyCommentAutomationV3", error);
+					}
+				}
+			} else if (data?.entry[0]?.messaging?.length > 0 &&
+				data?.entry[0]?.messaging[0]?.read) {
+				console.log("------------------------------------------------------------------     InstaDmReadState     ------------------------------------------------------------------");
+
+				const API_URLS = [
+					"https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
+					"https://api-digitalwall.xploro.io/Instagram/InstaDmReadState",
+					"https://api-digitalwall-demo.xploro.io/Instagram/InstaDmReadState"
 				];
 
 				const payload = {
-					PostId: postId.toString(),
-					Message: messageText,
-					RecipientID: RecipientID,
-					RecipientName: RecipientName,
-					CommentTime: Number(time),
-					CommentID: commentId,
+					MessageId: data.entry[0].messaging[0].read.mid,
+					SenderId: data.entry[0].messaging[0].sender.id,
+					ReceiverId: data.entry[0].messaging[0].recipient.id,
 				};
 
 				try {
@@ -211,152 +238,88 @@ app.post('/insta', async (req, res) => {
 						}
 					});
 
-					console.log("New comment received and processed.");
-
+					console.log("New comment readed and processed...");
 				} catch (error) {
 					console.error("Unexpected error:", error);
 				}
 			} else {
-				console.error("Missing required fields.");
-			}
+				if (
+					data?.entry[0]?.messaging?.length > 0 &&
+					data?.entry[0]?.messaging[0]?.message
+				) {
+					console.log("------------------------------------------------------------------     AddInstaDm     ------------------------------------------------------------------");
 
-		} else {
-			console.error("Data structure does not match expected format.");
-		}
+					const senderId = data.entry[0].messaging[0].sender.id;
+					const recipientId = data.entry[0].messaging[0].recipient.id;
+					const messageId = data.entry[0].messaging[0].message.mid;
+					const message = data.entry[0].messaging[0].message.text;
 
-		if (
-			data?.object === "instagram" &&
-			data?.entry?.length > 0 &&
-			data.entry[0]?.messaging?.length > 0 &&
-			data.entry[0].messaging[0]?.read
-		) {
-			console.log("||||||||||||||||||||||||||||||||||     InstaDmReadState    |||||||||||||||||||||||||||");
+					const API_URLS = [
+						"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
+						"https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
+						"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
+					];
 
-			const API_URLS = [
-				"https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
-				"https://api-digitalwall.xploro.io/Instagram/InstaDmReadState",
-				"https://api-digitalwall-demo.xploro.io/Instagram/InstaDmReadState"
-			];
-
-			const payload = {
-				MessageId: data.entry[0].messaging[0].read.mid,
-				SenderId: data.entry[0].messaging[0].sender.id,
-				ReceiverId: data.entry[0].messaging[0].recipient.id,
-			};
-
-			try {
-				const results = await Promise.allSettled(
-					API_URLS.map(url =>
-						axios.post(url, JSON.stringify(payload), {
-							headers: {
-								'Content-Type': 'application/json',
-								'accept': 'application/json'
-							},
+					Promise.allSettled(
+						API_URLS.map(url => {
+							console.log(`Making request to: ${url}`);
+							return axios.get(url, {
+								params: {
+									SenderId: senderId,
+									ReceiverId: recipientId,
+									MessageId: messageId,
+									Message: message
+								}
+							});
 						})
 					)
-				);
-
-				// Handle results from all endpoints
-				results.forEach((result, index) => {
-					if (result.status === 'fulfilled') {
-						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-					} else {
-						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
-					}
-				});
-
-				console.log("New comment readed and processed...");
-			} catch (error) {
-				console.error("Unexpected error:", error);
-			}
-		} else {
-			console.log("Conditions not met or 'read' key is missing.");
-		}
-
-		if (
-			data?.object === "instagram" &&
-			data?.entry?.length > 0 &&
-			data.entry[0]?.messaging?.length > 0 &&
-			data.entry[0].messaging[0]?.message
-		) {
-			console.log("||||||||||||||||||||||||||||||||||     AddInstaDm    |||||||||||||||||||||||||||");
-
-			const senderId = data.entry[0].messaging[0].sender.id;
-			const receiverId = data.entry[0].messaging[0].recipient.id;
-			const messageId = data.entry[0].messaging[0].message.mid;
-			const message = data.entry[0].messaging[0].message.text;
-
-			const API_URLS = [
-				"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
-				"https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
-				"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
-			];
-
-			Promise.allSettled(
-				API_URLS.map(url => {
-					console.log(`Making request to: ${url}`);
-					return axios.get(url, {
-						params: {
-							SenderId: senderId,
-							ReceiverId: receiverId,
-							MessageId: messageId,
-							Message: message
-						}
-					});
-				})
-			)
-				.then(results => {
-					results.forEach((result, index) => {
-						if (result.status === "fulfilled") {
-							console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
-						} else {
-							console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
-						}
-					});
-				});
-		} else {
-			console.log("Conditions not met or 'message' key is missing. AddInstaDm-----");
-		}
-
-		if (data?.object === "instagram" && data?.entry?.[0]?.messaging?.length > 0) {
-			console.log("||||||||||||||||||||||||||||||||||     ReplyDirectDM    |||||||||||||||||||||||||||");
-
-			const senderId = data.entry[0].messaging[0]?.sender?.id;
-			const recipientId = data.entry[0].messaging[0]?.recipient?.id;
-			const text = data.entry[0].messaging[0]?.message?.text;
-
-			if (senderId && recipientId && text) {
-				const API_URLS = [
-					"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
-					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
-					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
-				];
-
-				const formData = new FormData();
-				formData.append('SenderId', senderId);
-				formData.append('DmMessage', text);
-				formData.append('RecipientId', recipientId);
-
-
-				for (const url of API_URLS) {
-					try {
-						const response = await postRequest(url, senderId, recipientId, text);
-						console.log(`Success response from ${url}:`, response);
-					} catch (error) {
-						console.error(`Error response from ${url}:`, error);
-					}
+						.then(results => {
+							results.forEach((result, index) => {
+								if (result.status === "fulfilled") {
+									console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
+								} else {
+									console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
+								}
+							});
+						});
 				}
 
-			} else {
-				console.error("Missing required fields: SenderId, RecipientId, or text.");
+				if (data?.entry[0]?.messaging?.length > 0) {
+					console.log("------------------------------------------------------------------     ReplyDirectDM      ------------------------------------------------------------------");
+
+					const senderId = data.entry[0].messaging[0]?.sender?.id;
+					const recipientId = data.entry[0].messaging[0]?.recipient?.id;
+					const message = data.entry[0].messaging[0]?.message?.text;
+
+					if (senderId && recipientId && message) {
+						const API_URLS = [
+							"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+							"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM",
+							"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM"
+						];
+
+						const formData = new FormData();
+						formData.append('SenderId', senderId);
+						formData.append('DmMessage', message);
+						formData.append('RecipientId', recipientId);
+
+						for (const url of API_URLS) {
+							try {
+								const response = await postRequest(url, senderId, recipientId, message);
+								console.log(`Success response from ${url}:`, response);
+							} catch (error) {
+								console.error(`Error response from ${url}:`, error);
+							}
+						}
+					}
+				}
 			}
-		} else {
-			console.error("Data structure does not match expected format or messaging is missing.");
 		}
 
+		io.emit('instaEvent', { method: 'GET', message: "Websocket..." });
 		return res.status(200).send('Event received');
 	} catch (error) {
-		console.error("ErRrOr", error);
+		console.error("Websocket recevier got struck in middle of the sea... ", error);
 	}
 });
 
@@ -402,25 +365,6 @@ async function postRequest(url, senderId, recipientId, text) {
 		req.end();
 	});
 }
-
-app.post('/insta/feed', (req, res) => {
-	console.log("POST   ---   /insta/feed => ", 'Params:', req.params, 'Query:', req.query);
-	console.log('Body:', JSON.stringify(req.body));
-	// Handle webhook events here
-
-	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
-	res.status(200).send('Event received');
-});
-
-app.post('/insta/messages', (req, res) => {
-	console.log("POST   ---   /insta/messages => ", 'Params:', req.params, 'Query:', req.query);
-	console.log('Body:', JSON.stringify(req.body));
-	// Handle webhook events here
-
-
-	io.emit('instaEvent', { method: 'GET', params: req.params, query: req.query, body: req.body });
-	res.status(200).send('Event received');
-});
 
 app.get('/user', (req, res) => {
 	console.log("GET   ---   User => ", 'Params:', req.params, 'Query:', req.query);
