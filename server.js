@@ -96,10 +96,9 @@ app.post('/insta', async (req, res) => {
 								SenderId: payload.SenderId,
 								ReceiverId: payload.ReceiverId,
 								MessageId: payload.MessageId,
-								Message: payload.Message,
+								Message: encodeURIComponent(payload.Message),
 							},
 							headers: {
-								'Content-Type': 'application/json',
 								'accept': 'application/json'
 							},
 						})
