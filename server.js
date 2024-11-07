@@ -86,16 +86,14 @@ app.post('/insta', async (req, res) => {
 				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 			];
 
-			console.log(payload, "...");
-
 			try {
 				const results = await Promise.allSettled(
 					API_URLS.map(url => {
 						const params = {
-							SenderId: payload.SenderId,
-							ReceiverId: payload.ReceiverId,
-							MessageId: payload.MessageId,
-							Message: payload.Message,
+							SenderId: encodeURIComponent(payload.SenderId),
+							ReceiverId: encodeURIComponent(payload.ReceiverId),
+							MessageId: encodeURIComponent(payload.MessageId),
+							Message: encodeURIComponent(payload.Message),
 						};
 
 						return axios.get(url, {
