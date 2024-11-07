@@ -88,13 +88,17 @@ app.post('/insta', async (req, res) => {
 			try {
 				// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 				// let b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-				let c = await axios.get(`${API_URLS[2]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+				let url = `${API_URLS[2]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`
+
+				let c = await axios.get(url)
 
 				console.log(`
 					
 					`, c)
 			} catch (error) {
 				console.log("Error in the overall process:", error);
+			} finally {
+				console.log(url)
 			}
 		}
 
