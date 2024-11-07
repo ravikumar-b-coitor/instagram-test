@@ -92,7 +92,7 @@ app.post('/insta', async (req, res) => {
 				);
 
 				// Wait for all promises to settle (resolve or reject)
-				const results = await Promise.allSettled(apiCalls);
+				const results = await Promise.all(apiCalls);
 
 				// Handle the results
 				results.forEach((result, index) => {
