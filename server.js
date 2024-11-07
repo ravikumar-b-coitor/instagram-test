@@ -107,6 +107,7 @@ app.post('/insta', async (req, res) => {
 
 				// Handle results from all endpoints
 				results.forEach((result, index) => {
+					console.log(result);
 					if (result.status === 'fulfilled') {
 						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
 					} else {
