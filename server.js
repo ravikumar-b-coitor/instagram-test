@@ -80,8 +80,8 @@ app.post('/insta', async (req, res) => {
 			let MessageId = data.entry[0].messaging[0].message.mid
 
 			const API_URLS = [
-				"https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
-				"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
+				// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
+				// "https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
 				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 			];
 
