@@ -91,7 +91,13 @@ app.post('/insta', async (req, res) => {
 			try {
 				const results = await Promise.allSettled(
 					API_URLS.map(url =>
-						axios.get(url, payload, {
+						axios.get(url, {
+							params: {
+								SenderId: payload.SenderId,
+								ReceiverId: payload.ReceiverId,
+								MessageId: payload.MessageId,
+								Message: payload.Message,
+							},
 							headers: {
 								'Content-Type': 'application/json',
 								'accept': 'application/json'
