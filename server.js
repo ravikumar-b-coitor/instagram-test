@@ -85,7 +85,6 @@ app.post('/insta', async (req, res) => {
 				"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 			];
 
-
 			function makeApiCall(url, params) {
 				return new Promise((resolve, reject) => {
 					const urlObj = new URL(url);
@@ -106,6 +105,13 @@ app.post('/insta', async (req, res) => {
 						res.on('end', () => {
 							if (res.statusCode === 200) {
 								resolve(JSON.parse(data));  // Resolve with the response data
+							} else if (res.statusCode === 307) {
+								// Handle redirect
+								const redirectUrl = res.headers.location;
+								console.log(`Redirected to: ${redirectUrl}`);
+
+								// Follow the redirect
+								makeApiCall(redirectUrl, params).then(resolve).catch(reject);
 							} else {
 								reject(new Error(`API call failed with status: ${res.statusCode}`));  // Reject on non-200 status
 							}
