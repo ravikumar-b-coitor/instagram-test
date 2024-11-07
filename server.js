@@ -91,16 +91,18 @@ app.post('/insta', async (req, res) => {
 			try {
 				const results = await Promise.allSettled(
 					API_URLS.map(url => {
-						const formData = new URLSearchParams();
-						formData.append('SenderId', payload.SenderId);
-						formData.append('ReceiverId', payload.ReceiverId);
-						formData.append('MessageId', payload.MessageId);
-						formData.append('Message', payload.Message);
+						const params = {
+							SenderId: payload.SenderId,
+							ReceiverId: payload.ReceiverId,
+							MessageId: payload.MessageId,
+							Message: payload.Message,
+						};
 
-						return axios.post(url, formData, {
+						return axios.get(url, {
+							params,
 							headers: {
 								'Content-Type': 'application/x-www-form-urlencoded',
-								'accept': 'application/json',
+								'Accept': 'application/json',
 							},
 						});
 					})
