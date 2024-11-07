@@ -86,12 +86,25 @@ app.post('/insta', async (req, res) => {
 			];
 
 			try {
-				const response = await axios.get(`https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`);
+				// Create an array of promises for each API call
+				const apiCalls = API_URLS.map(url =>
+					axios.get(`${url}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+				);
 
-				console.log("..................", response);
-				return;
+				// Wait for all promises to settle (resolve or reject)
+				const results = await Promise.allSettled(apiCalls);
+
+				// Handle the results
+				results.forEach((result, index) => {
+					if (result.status === 'fulfilled') {
+						console.log(`API call ${index + 1} succeeded with data:`, result.value);
+					} else {
+						console.log(`API call ${index + 1} failed with reason:`, result.reason);
+					}
+				});
+
 			} catch (error) {
-				console.log("Error", error)
+				console.log("Error in the overall process:", error);
 			}
 		}
 
