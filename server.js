@@ -90,24 +90,24 @@ app.post('/insta', async (req, res) => {
 
 			try {
 				const results = await Promise.allSettled(
-					API_URLS.map(url =>
-						axios.get(url, {
-							params: {
-								SenderId: payload.SenderId,
-								ReceiverId: payload.ReceiverId,
-								MessageId: payload.MessageId,
-								Message: encodeURIComponent(payload.Message),
-							},
+					API_URLS.map(url => {
+						const formData = new URLSearchParams();
+						formData.append('SenderId', payload.SenderId);
+						formData.append('ReceiverId', payload.ReceiverId);
+						formData.append('MessageId', payload.MessageId);
+						formData.append('Message', payload.Message);
+
+						return axios.post(url, formData, {
 							headers: {
-								'accept': 'application/json'
+								'Content-Type': 'application/x-www-form-urlencoded',
+								'accept': 'application/json',
 							},
-						})
-					)
+						});
+					})
 				);
 
 				// Handle results from all endpoints
 				results.forEach((result, index) => {
-					console.log(result);
 					if (result.status === 'fulfilled') {
 						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
 					} else {
