@@ -100,7 +100,6 @@ app.post('/insta', async (req, res) => {
 			}
 		}
 
-		return;
 
 		if (
 			data &&
