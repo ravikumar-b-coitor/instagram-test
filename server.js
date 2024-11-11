@@ -243,8 +243,7 @@ app.post('/insta', async (req, res) => {
 					console.error("Unexpected error:", error);
 				}
 			} else {
-				if (
-					data?.entry[0]?.messaging?.length > 0 &&
+				if (data?.entry[0]?.messaging?.length > 0 &&
 					data?.entry[0]?.messaging[0]?.message
 				) {
 					console.log("------------------------------------------------------------------     AddInstaDm     ------------------------------------------------------------------");
