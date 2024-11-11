@@ -145,8 +145,6 @@ app.post('/insta', async (req, res) => {
 				} catch (error) {
 					console.error("Error while sending requests to APIs:", error.message);
 				}
-			} else {
-				console.error("Invalid input format received:", JSON.stringify(data));
 			}
 		} else if (data?.object === "instagram") {
 			if (data?.entry[0]?.changes && data?.entry[0]?.changes[0]?.field === "comments") {
@@ -195,8 +193,6 @@ app.post('/insta', async (req, res) => {
 								console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
 							}
 						});
-
-						// XXX
 					} catch (error) {
 						console.error("Error: Instagram/ReplyCommentAutomationV3", error);
 					}
@@ -237,8 +233,6 @@ app.post('/insta', async (req, res) => {
 							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
 						}
 					});
-
-					console.log("New comment readed and processed...");
 				} catch (error) {
 					console.error("Unexpected error:", error);
 				}
