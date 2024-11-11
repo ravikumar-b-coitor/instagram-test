@@ -29,6 +29,8 @@ const io = new Server(server, {
 app.use(express.static('public'));
 app.get('/', (req, res) => res.send("Hello World!"));
 
+let midStore = new Set();
+
 io.on('connection', (socket) => {
 	console.log('a user connected');
 
@@ -246,6 +248,9 @@ app.post('/insta', async (req, res) => {
 					const recipientId = data.entry[0].messaging[0].recipient.id;
 					const messageId = data.entry[0].messaging[0].message.mid;
 					const message = data.entry[0].messaging[0].message.text;
+
+					if (midStore.has(messageId)) return;
+					midStore.add(messageId);
 
 					const API_URLS = [
 						"https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
