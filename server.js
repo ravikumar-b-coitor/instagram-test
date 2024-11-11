@@ -272,24 +272,15 @@ app.post('/insta', async (req, res) => {
 								}
 							});
 						})
-					)
-						.then(results => {
-							results.forEach((result, index) => {
-								if (result.status === "fulfilled") {
-									console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
-								} else {
-									console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
-								}
-							});
+					).then(results => {
+						results.forEach((result, index) => {
+							if (result.status === "fulfilled") {
+								console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
+							} else {
+								console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
+							}
 						});
-				}
-
-				if (data?.entry[0]?.messaging?.length > 0) {
-					console.log("------------------------------------------------------------------     ReplyDirectDM      ------------------------------------------------------------------");
-
-					const senderId = data.entry[0].messaging[0]?.sender?.id;
-					const recipientId = data.entry[0].messaging[0]?.recipient?.id;
-					const message = data.entry[0].messaging[0]?.message?.text;
+					});
 
 					if (senderId && recipientId && message) {
 						const API_URLS = [
