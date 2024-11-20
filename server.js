@@ -163,7 +163,7 @@ app.post('/insta', async (req, res) => {
 					const API_URLS = [
 						"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
 						"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV3",
-						"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV3"
+						"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV4"
 					];
 
 					const payload = {
