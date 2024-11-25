@@ -17,7 +17,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const logFilePath = path.join(__dirname, 'insta-logs.txt');			// Define the log file path
 const writeLogToFile = (logMessage) => {
-	const timestamp = new Date().toISOString();
+	const timestamp = new Date().toLocaleString("en-IN", {
+		timeZone: "Asia/Kolkata",
+		hour12: false,
+	});
 	const formattedLog = `[${timestamp}] ${logMessage}\n`;
 
 	fs.appendFile(logFilePath, formattedLog, (err) => {
@@ -69,7 +72,7 @@ app.post('/insta', async (req, res) => {
 		const data = req.body;
 		console.log('Data : ', JSON.stringify(data));
 
-		const logMessage = `GET /insta - Params: ${JSON.stringify(req.params)}, Query: ${JSON.stringify(req.query)}, Body: ${JSON.stringify(req.body)}`;
+		const logMessage = `GET /insta - Body: ${JSON.stringify(req.body)}`;
 		writeLogToFile(logMessage); // Log to file
 
 		if (data?.object !== "page" && data?.object !== "instagram") return;
