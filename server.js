@@ -5,13 +5,27 @@ const { Server } = require('socket.io');
 const FormData = require('form-data');
 const axios = require("axios");
 const https = require('https');
+const path = require('path');
 const cors = require('cors');
+const fs = require('fs');
 const app = express();
 const port = 3000;
 
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const logFilePath = path.join(__dirname, 'insta-logs.txt');			// Define the log file path
+const writeLogToFile = (logMessage) => {
+	const timestamp = new Date().toISOString();
+	const formattedLog = `[${timestamp}] ${logMessage}\n`;
+
+	fs.appendFile(logFilePath, formattedLog, (err) => {
+		if (err) {
+			console.error('Failed to write log:', err);
+		}
+	});
+};
 
 const server = createServer(app);
 const io = new Server(server, {
@@ -54,6 +68,9 @@ app.post('/insta', async (req, res) => {
 	try {
 		const data = req.body;
 		console.log('Data : ', JSON.stringify(data));
+
+		const logMessage = `GET /insta - Params: ${JSON.stringify(req.params)}, Query: ${JSON.stringify(req.query)}, Body: ${JSON.stringify(req.body)}`;
+		writeLogToFile(logMessage); // Log to file
 
 		if (data?.object !== "page" && data?.object !== "instagram") return;
 		if (data?.object === "page") {
