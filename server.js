@@ -100,7 +100,7 @@ app.post('/insta', async (req, res) => {
 				const API_URLS = [
 					// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
 					"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
-					"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
+					// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 				];
 
 				try {
@@ -110,12 +110,12 @@ app.post('/insta', async (req, res) => {
 					let MessageId = data.entry[0].messaging[0].message.mid
 
 					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-					const b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+					// const b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 
 					console.log(`
 						
-						C`, c.status, "B", b.status)
+						C`, c.status)
 				} catch (error) {
 					console.log("Error in the overall process:", error);
 				}
