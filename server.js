@@ -369,6 +369,7 @@ async function postRequest(url, senderId, recipientId, text) {
 			});
 
 			res.on('end', () => {
+				console.log(JSON.stringify(data))
 				resolve(JSON.parse(data));
 			});
 		});
