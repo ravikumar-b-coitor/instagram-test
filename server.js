@@ -306,27 +306,27 @@ app.post('/insta', async (req, res) => {
 						});
 					});
 
-					// if (senderId && recipientId && message) {
-					// 	const API_URLS = [
-					// 		"https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
-					// 		"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM_V4",
-					// 		"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM_V4"
-					// 	];
+					if (senderId && recipientId && message) {
+						const API_URLS = [
+							// "https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
+							"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM_V4",
+							// "https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM_V4"
+						];
 
-					// 	const formData = new FormData();
-					// 	formData.append('SenderId', senderId);
-					// 	formData.append('DmMessage', message);
-					// 	formData.append('RecipientId', recipientId);
+						const formData = new FormData();
+						formData.append('SenderId', senderId);
+						formData.append('DmMessage', message);
+						formData.append('RecipientId', recipientId);
 
-					// 	for (const url of API_URLS) {
-					// 		try {
-					// 			const response = await postRequest(url, senderId, recipientId, message);
-					// 			console.log(`Success response from ${url}:`, response);
-					// 		} catch (error) {
-					// 			console.error(`Error response from ${url}:`, error);
-					// 		}
-					// 	}
-					// }
+						for (const url of API_URLS) {
+							try {
+								const response = await postRequest(url, senderId, recipientId, message);
+								console.log(`Success response from ${url}:`, response);
+							} catch (error) {
+								console.error(`Error response from ${url}:`, error);
+							}
+						}
+					}
 				}
 			}
 		}
