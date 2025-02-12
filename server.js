@@ -11,6 +11,8 @@ const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 
+let config = { verifyToken: "123456789" }
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -65,7 +67,7 @@ app.get('/insta', (req, res) => {
 	// Check if a token and mode is in the query string of the request
 	if (mode && token) {
 		// Check the mode and token sent is correct
-		if (mode === "subscribe" && token === config.verifyToken) {
+		if (mode === "subscribe" && token == config.verifyToken) {
 			// Respond with the challenge token from the request
 			console.log("WEBHOOK_VERIFIED");
 			res.status(200).send(challenge);
@@ -392,7 +394,7 @@ app.get('/instagram', (req, res) => {
 	// Check if a token and mode is in the query string of the request
 	if (mode && token) {
 		// Check the mode and token sent is correct
-		if (mode === "subscribe" && token === config.verifyToken) {
+		if (mode === "subscribe" && token == config.verifyToken) {
 			// Respond with the challenge token from the request
 			console.log("WEBHOOK_VERIFIED");
 			res.status(200).send(challenge);
