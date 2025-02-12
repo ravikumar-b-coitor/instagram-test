@@ -383,19 +383,28 @@ async function postRequest(url, senderId, recipientId, text) {
 	});
 }
 
-app.get('/user', (req, res) => {
-	console.log("GET   ---   User => ", 'Params:', req.params, 'Query:', req.query);
-	console.log('Body:', JSON.stringify(req.body));
+app.get('/instagram', (req, res) => {
+	// Parse the query params
+	let mode = req.query["hub.mode"];
+	let token = req.query["hub.verify_token"];
+	let challenge = req.query["hub.challenge"];
 
-	const challenge = req.query['hub.challenge'];
-
-	if (challenge) {
-		res.send(challenge);
+	// Check if a token and mode is in the query string of the request
+	if (mode && token) {
+		// Check the mode and token sent is correct
+		if (mode === "subscribe" && token === config.verifyToken) {
+			// Respond with the challenge token from the request
+			console.log("WEBHOOK_VERIFIED");
+			res.status(200).send(challenge);
+		} else {
+			// Respond with '403 Forbidden' if verify tokens do not match
+			res.sendStatus(403);
+		}
 	}
 });
 
-app.post('/user', (req, res) => {
-	console.log("POST   -----   User => ", 'Params:', req.params, 'Query:', req.query);
+app.post('/instagram', (req, res) => {
+	console.log("POST  Okkkkkkk -----   User => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
 	// Handle webhook events here
 
