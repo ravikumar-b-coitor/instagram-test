@@ -333,10 +333,10 @@ app.post('/insta', async (req, res) => {
 			}
 		}
 
-		io.emit('instaEvent', { method: 'GET', message: "Websocket..." });
 	} catch (error) {
 		console.error("Websocket recevier got struck in middle of the sea... ", error);
 	} finally {
+		io.emit('instaEvent', { method: 'GET', message: "Websocket..." });
 		return res.status(200).send('Event received');
 	}
 });
