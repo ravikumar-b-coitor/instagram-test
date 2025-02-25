@@ -137,7 +137,7 @@ app.post('/insta', async (req, res) => {
 
 				const API_URLS = [
 					"https://api-digitalwall.coitor.com/Facebook/ReplyFBCommentAutomationV3",
-					"https://api-digitalwall.xploro.io/Facebook/ReplyFBCommentAutomationV3",
+					"https://api-digitalwall.xploro.io/Facebook/ReplyFBCommentAutomationV4",
 					"https://api-digitalwall-demo.xploro.io/Facebook/ReplyFBCommentAutomationV3"
 				];
 
