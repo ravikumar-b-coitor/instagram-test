@@ -99,13 +99,13 @@ app.post('/insta', async (req, res) => {
 				data.entry[0].messaging[0].message &&
 				data.entry[0].messaging[0].message.text
 			) {
-				const API_URLS = [
-					// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
-					"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
-					// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
-				];
-
 				try {
+					const API_URLS = [
+						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
+						"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
+						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
+					];
+
 					let Message = data.entry[0].messaging[0].message.text
 					let SenderId = data.entry[0].messaging[0].sender.id
 					let ReceiverId = data.entry[0].messaging[0].recipient.id
@@ -116,21 +116,20 @@ app.post('/insta', async (req, res) => {
 					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					console.log(`Facebook/AddInstaDm`, c.status);
 
-					const API_URLS = [
+					const API_URL = [
 						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm/",
-						"https://api-digitalwall.xploro.io/Facebook/AddInstaDm/",
+						"https://api-digitalwall.xploro.io/Facebook/ReplyDirectDM/",
 						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/"
 					];
 
 					Promise.allSettled(
-						API_URLS.map(url => {
+						API_URL.map(url => {
 							console.log(`Making request to: ${url}`);
 							return axios.get(url, {
 								params: {
 									SenderId: SenderId,
-									ReceiverId: ReceiverId,
-									MessageId: MessageId,
-									Message: Message
+									RecipientId: ReceiverId,
+									DmMessage: Message
 								}
 							});
 						})
