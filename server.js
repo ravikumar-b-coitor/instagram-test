@@ -114,10 +114,35 @@ app.post('/insta', async (req, res) => {
 					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					// const b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+					console.log(`Facebook/AddInstaDm`, c.status);
 
-					console.log(`
-						
-						C`, c.status)
+					const API_URLS = [
+						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm/",
+						"https://api-digitalwall.xploro.io/Facebook/AddInstaDm/",
+						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/"
+					];
+
+					Promise.allSettled(
+						API_URLS.map(url => {
+							console.log(`Making request to: ${url}`);
+							return axios.get(url, {
+								params: {
+									SenderId: SenderId,
+									ReceiverId: ReceiverId,
+									MessageId: MessageId,
+									Message: Message
+								}
+							});
+						})
+					).then(results => {
+						results.forEach((result, index) => {
+							if (result.status === "fulfilled") {
+								console.log(`Response from API  Facebook/AddInstaDm----- ${index + 1}:`, result.value.data);
+							} else {
+								console.error(`Error from API  Facebook/AddInstaDm----- ${index + 1}:`, result.reason);
+							}
+						});
+					});
 				} catch (error) {
 					console.log("Error in the overall process:", error);
 				}
