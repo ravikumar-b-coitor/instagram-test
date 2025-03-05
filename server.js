@@ -116,16 +116,16 @@ app.post('/insta', async (req, res) => {
 					console.log(`-------- Facebook/AddInstaDm`, c.status);
 
 					// Convert parameters to URLSearchParams format
-					const data = new URLSearchParams();
-					data.append("SenderId", SenderId);
-					data.append("RecipientId", RecipientId);
-					data.append("DmMessage", Message);
+					const param = new URLSearchParams();
+					param.append("SenderId", SenderId);
+					param.append("RecipientId", RecipientId);
+					param.append("DmMessage", Message);
 
 					Promise.allSettled(
 						API_URL.map(url => {
 							console.log(`Making POST request to: ${url}`);
 
-							return axios.post(url, data, {
+							return axios.post(url, param, {
 								headers: {
 									"Content-Type": "application/x-www-form-urlencoded",
 									"Accept": "application/json"
