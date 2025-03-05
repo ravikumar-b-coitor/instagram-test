@@ -123,7 +123,7 @@ app.post('/insta', async (req, res) => {
 
 					const API_URL = [
 						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm/",
-						"https://api-digitalwall.xploro.io/Facebook/Facebook/ReplyDirectDM_V4/",
+						"https://api-digitalwall.xploro.io/Facebook/ReplyDirectDM_V4/",
 						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/"
 					];
 
