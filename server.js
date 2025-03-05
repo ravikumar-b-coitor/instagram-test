@@ -53,7 +53,7 @@ io.on('connection', (socket) => {
 	console.log('a user connected');
 
 	socket.on('disconnect', () => {
-		console.log('user disconnected');
+		console.error('user disconnected');
 	});
 });
 
@@ -115,29 +115,29 @@ app.post('/insta', async (req, res) => {
 					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					console.log(`-------- Facebook/AddInstaDm`, c.status);
 
-					const API_URL = [
-						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm/",
-						"https://api-digitalwall.xploro.io/Facebook/Facebook/ReplyDirectDM_V4/",
-						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/"
-					];
+					// Convert parameters to URLSearchParams format
+					const data = new URLSearchParams();
+					data.append("SenderId", SenderId);
+					data.append("RecipientId", RecipientId);
+					data.append("DmMessage", Message);
 
 					Promise.allSettled(
 						API_URL.map(url => {
-							console.log(`Making request to: ${url}`);
-							return axios.get(url, {
-								params: {
-									SenderId: SenderId,
-									RecipientId: ReceiverId,
-									DmMessage: Message
+							console.log(`Making POST request to: ${url}`);
+
+							return axios.post(url, data, {
+								headers: {
+									"Content-Type": "application/x-www-form-urlencoded",
+									"Accept": "application/json"
 								}
 							});
 						})
 					).then(results => {
 						results.forEach((result, index) => {
 							if (result.status === "fulfilled") {
-								console.log(`Response from API  Facebook/ReplyDirectDM_V4----- ${index + 1}:`, result.value.data);
+								console.log(`Response from API Facebook/ReplyDirectDM_V4----- ${index + 1}:`, result.value.data);
 							} else {
-								console.error(`Error from API  Facebook/ReplyDirectDM_V4----- ${index + 1}:`, result.reason);
+								console.error(`Error from API Facebook/ReplyDirectDM_V4----- ${index + 1}:`, result.reason);
 							}
 						});
 					});
