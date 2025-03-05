@@ -117,9 +117,9 @@ app.post('/insta', async (req, res) => {
 
 					// Convert parameters to URLSearchParams format
 					const param = new URLSearchParams();
-					param.append("SenderId", SenderId);
-					param.append("RecipientId", ReceiverId);
-					param.append("DmMessage", Message);
+					param.append("SenderId", String(SenderId));
+					param.append("RecipientId", String(ReceiverId));
+					param.append("DmMessage", String(Message));
 
 					const API_URL = [
 						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm/",
