@@ -99,21 +99,10 @@ app.post('/insta', async (req, res) => {
 				data.entry[0].messaging[0].message.text
 			) {
 				try {
-					const API_URLS = [
-						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
-						"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
-						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
-					];
-
 					let Message = data.entry[0].messaging[0].message.text
 					let SenderId = data.entry[0].messaging[0].sender.id
 					let ReceiverId = data.entry[0].messaging[0].recipient.id
 					let MessageId = data.entry[0].messaging[0].message.mid
-
-					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-					// const b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-					console.log(`-------- Facebook/AddInstaDm`, c.status);
 
 					// Convert parameters to URLSearchParams format
 					const param = new URLSearchParams();
@@ -122,8 +111,8 @@ app.post('/insta', async (req, res) => {
 					param.append("DmMessage", String(Message));
 
 					const API_URL = [
-						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
 						"https://api-digitalwall.xploro.io/Facebook/ReplyDirectDM_V4",
+						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
 						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 					];
 
@@ -147,6 +136,17 @@ app.post('/insta', async (req, res) => {
 							}
 						});
 					});
+
+					const API_URLS = [
+						"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
+						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
+						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
+					];
+
+					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+					// const b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
+					console.log(`-------- Facebook/AddInstaDm`, c.status);
 				} catch (error) {
 					console.log("Error in the overall process:", error);
 				}
