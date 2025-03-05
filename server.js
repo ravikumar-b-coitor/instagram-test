@@ -121,6 +121,12 @@ app.post('/insta', async (req, res) => {
 					param.append("RecipientId", ReceiverId);
 					param.append("DmMessage", Message);
 
+					const API_URL = [
+						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm/",
+						"https://api-digitalwall.xploro.io/Facebook/Facebook/ReplyDirectDM_V4/",
+						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm/"
+					];
+
 					Promise.allSettled(
 						API_URL.map(url => {
 							console.log(`Making POST request to: ${url}`);
