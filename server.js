@@ -45,7 +45,6 @@ const io = new Server(server, {
 	}
 });
 
-// app.use(express.static('public'));
 app.get('/', (req, res) => res.send("Hello World!"));
 
 let midStore = new Set();
@@ -114,7 +113,7 @@ app.post('/insta', async (req, res) => {
 					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					// const b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-					console.log(`Facebook/AddInstaDm`, c.status);
+					console.log(`-------- Facebook/AddInstaDm`, c.status);
 
 					const API_URL = [
 						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm/",
@@ -136,9 +135,9 @@ app.post('/insta', async (req, res) => {
 					).then(results => {
 						results.forEach((result, index) => {
 							if (result.status === "fulfilled") {
-								console.log(`Response from API  Facebook/AddInstaDm----- ${index + 1}:`, result.value.data);
+								console.log(`Response from API  Facebook/ReplyDirectDM_V4----- ${index + 1}:`, result.value.data);
 							} else {
-								console.error(`Error from API  Facebook/AddInstaDm----- ${index + 1}:`, result.reason);
+								console.error(`Error from API  Facebook/ReplyDirectDM_V4----- ${index + 1}:`, result.reason);
 							}
 						});
 					});
