@@ -118,7 +118,7 @@ app.post('/insta', async (req, res) => {
 					// Convert parameters to URLSearchParams format
 					const param = new URLSearchParams();
 					param.append("SenderId", SenderId);
-					param.append("RecipientId", RecipientId);
+					param.append("RecipientId", ReceiverId);
 					param.append("DmMessage", Message);
 
 					Promise.allSettled(
