@@ -79,17 +79,17 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 					}
 				} catch (fetchError) {
 					console.error("Error sending file:", fetchError);
-					res.status(500).send("Error sending audio file");
+					res.status(500).send({ success: false, message: "Error sending audio file" });
 				}
 			})
 			.on("error", (err) => {
 				console.error("FFmpeg Error:", err);
-				res.status(500).send("Error processing audio");
+				res.status(500).send({ success: false, message: "FFmpeg error processing audio" });
 			})
 			.save(outputFilePath);
 	} catch (error) {
 		console.error("Error:", error);
-		res.status(500).send("Error processing audio");
+		res.status(500).send({ success: false, message: "Error processing audio" });
 	}
 });
 
