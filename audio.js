@@ -67,12 +67,16 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 
 					console.log(result, ".....", req?.headers?.authorization);
 					// Send response
-					res.json({
-						success: true,
-						data: {
-							CallRecordingKey: result?.CallRecordingKey,
-						},
-					});
+					if (result && result?.CallRecordingKey) {
+						res.json({
+							success: true,
+							data: {
+								CallRecordingKey: result?.CallRecordingKey,
+							},
+						});
+					} else {
+						res.json({ success: false, message: "CallRecordingKey not found" });
+					}
 				} catch (fetchError) {
 					console.error("Error sending file:", fetchError);
 					res.status(500).send("Error sending audio file");
