@@ -54,7 +54,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 					const response = await fetch(`${Url}Register/CreateCallRecording`, {
 						method: "POST",
 						headers: {
-							Authorization: `Bearer ${req?.headers?.authorization}`,
+							Authorization: `${req?.headers?.authorization}`,
 						},
 						body: formData,
 					});
@@ -65,7 +65,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 					fs.unlinkSync(tempInputPath);
 					fs.unlinkSync(outputFilePath);
 
-					console.log(result, ".....");
+					console.log(result, ".....", req?.headers?.authorization);
 					// Send response
 					res.json({
 						success: true,
