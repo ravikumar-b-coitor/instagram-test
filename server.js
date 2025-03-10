@@ -10,6 +10,7 @@ const cors = require('cors');
 const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
+const audioProcessor = require("./audio");
 
 let config = { verifyToken: "123456789" }
 
@@ -46,6 +47,7 @@ const io = new Server(server, {
 });
 
 app.get('/', (req, res) => res.send("Hello World!"));
+app.use("/v2", audioProcessor);
 
 let midStore = new Set();
 
