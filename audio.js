@@ -15,7 +15,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 		if (!req.file) return res.status(400).send("No audio file uploaded");
 		console.time("Processing Time");
 
-		const {Url, StaffId, StartTime, EndTime } = req.body;
+		const { Url, StaffId, StartTime, EndTime } = req.body;
 
 		// Determine input file format
 		const inputFormat = req.file.mimetype.split("/")[1];
@@ -65,6 +65,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 					fs.unlinkSync(tempInputPath);
 					fs.unlinkSync(outputFilePath);
 
+					console.log(result, ".....");
 					// Send response
 					res.json({
 						success: true,
