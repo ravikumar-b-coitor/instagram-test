@@ -1,6 +1,7 @@
 "use strict";
 
-const fetch = require("node-fetch").default;
+// const fetch = require("node-fetch").default;
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
 const ffmpeg = require("fluent-ffmpeg");
 const FormData = require("form-data");
 const express = require("express");
