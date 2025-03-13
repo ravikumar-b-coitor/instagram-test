@@ -15,8 +15,8 @@ const audioProcessor = require("./audio");
 let config = { verifyToken: "123456789" }
 
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
 const logFilePath = path.join(__dirname, 'insta-logs.txt');			// Define the log file path
 const writeLogToFile = (logMessage) => {
