@@ -16,7 +16,7 @@ let config = { verifyToken: "123456789" }
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 
 const logFilePath = path.join(__dirname, 'insta-logs.txt');			// Define the log file path
 const writeLogToFile = (logMessage) => {
