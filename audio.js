@@ -75,9 +75,9 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 					});
 
 					console.log(result, ".....", req?.headers?.authorization);
-					res.json(result?.CallRecordingKey ? {
+					res.json(result?.id ? {
 						success: true,
-						data: { CallRecordingKey: result?.CallRecordingKey },
+						data: result,
 					} : { success: false, message: "CallRecordingKey not found" });
 
 				} catch (fetchError) {
