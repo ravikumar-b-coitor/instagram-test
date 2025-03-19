@@ -17,6 +17,12 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 		if (!req.file) return res.status(400).send("No audio file uploaded");
 		console.time("Processing Time");
 
+		// Log all received form data
+		console.log("Received FormData:");
+		console.log("File:", req.file);
+		console.log("Fields:", req.body);
+
+
 		const { Url, StaffId, StartTime, EndTime } = req.body;
 		const requestId = uuidv4(); // Generate unique ID per request
 
