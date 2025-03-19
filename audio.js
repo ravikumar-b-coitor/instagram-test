@@ -18,7 +18,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 		console.time("Processing Time");
 
 		const { url, staff_id, start_time, end_time, CallDuration } = req.body;
-		console.log("Fields:",  url, staff_id, start_time, end_time, CallDuration);
+		console.log("Fields:", url, staff_id, start_time, end_time, CallDuration);
 
 		const requestId = uuidv4(); // Generate unique ID per request
 
@@ -66,14 +66,6 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 
 					const result = await response.json();
 
-					// Clean up files asynchronously
-					fs.unlink(tempInputPath, (err) => {
-						if (err) console.error("Error deleting temp input file:", err);
-					});
-					fs.unlink(outputFilePath, (err) => {
-						if (err) console.error("Error deleting processed audio file:", err);
-					});
-
 					console.log(result, ".....", req?.headers?.authorization);
 					res.json(result?.id ? {
 						success: true,
@@ -83,6 +75,17 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 				} catch (fetchError) {
 					console.error("Error sending file:", fetchError);
 					res.status(500).send({ success: false, message: "Error sending audio file" });
+				} finally {
+					// Cleanup files in all cases
+					fs.unlink(tempInputPath, (err) => {
+						if (err) console.error("Error deleting temp input file:", err);
+						else console.log(`Deleted temp input file: ${tempInputPath}`);
+					});
+
+					fs.unlink(outputFilePath, (err) => {
+						if (err) console.error("Error deleting processed audio file:", err);
+						else console.log(`Deleted processed audio file: ${outputFilePath}`);
+					});
 				}
 			})
 			.on("error", (err) => {
