@@ -1,7 +1,7 @@
 "use strict";
 
 // const fetch = require("node-fetch").default;
-const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const ffmpeg = require("fluent-ffmpeg");
 const FormData = require("form-data");
 const express = require("express");
@@ -17,13 +17,9 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 		if (!req.file) return res.status(400).send("No audio file uploaded");
 		console.time("Processing Time");
 
-		// Log all received form data
-		console.log("Received FormData:");
-		console.log("File:", req.file);
-		console.log("Fields:", req.body);
+		const { url, staff_id, start_time, end_time, CallDuration } = req.body;
+		console.log("Fields:",  url, staff_id, start_time, end_time, CallDuration);
 
-
-		const { Url, StaffId, StartTime, EndTime } = req.body;
 		const requestId = uuidv4(); // Generate unique ID per request
 
 		// Determine input file format
@@ -50,16 +46,17 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 
 				// Prepare form data
 				const formData = new FormData();
-				formData.append("StaffId", StaffId);
-				formData.append("StartTime", StartTime);
-				formData.append("EndTime", EndTime);
+				formData.append("staff_id", staff_id);
+				formData.append("start_time", start_time);
+				formData.append("end_time", end_time);
+				formData.append("CallDuration", CallDuration);
 				formData.append("Recording", fs.createReadStream(outputFilePath), {
 					filename: `processed_audio_${requestId}.mp3`,
 					contentType: "audio/mp3",
 				});
 
 				try {
-					const response = await fetch(`${Url}Register/CreateCallRecording`, {
+					const response = await fetch(`${url}`, {
 						method: "POST",
 						headers: {
 							Authorization: `${req?.headers?.authorization}`,
