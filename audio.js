@@ -35,7 +35,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 			.input(tempInputPath)
 			.format("mp3")
 			.audioFilters([
-				"volume=3.0",
+				"volume=2.0",
 				// "highpass=f=200",
 				// "lowpass=f=3000",
 				// "afftdn=nr=20",
