@@ -76,16 +76,16 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 					console.error("Error sending file:", fetchError);
 					res.status(500).send({ success: false, message: "Error sending audio file" });
 				} finally {
-					// Cleanup files in all cases
-					fs.unlink(tempInputPath, (err) => {
-						if (err) console.error("Error deleting temp input file:", err);
-						else console.log(`Deleted temp input file: ${tempInputPath}`);
-					});
+					// // Cleanup files in all cases
+					// fs.unlink(tempInputPath, (err) => {
+					// 	if (err) console.error("Error deleting temp input file:", err);
+					// 	else console.log(`Deleted temp input file: ${tempInputPath}`);
+					// });
 
-					fs.unlink(outputFilePath, (err) => {
-						if (err) console.error("Error deleting processed audio file:", err);
-						else console.log(`Deleted processed audio file: ${outputFilePath}`);
-					});
+					// fs.unlink(outputFilePath, (err) => {
+					// 	if (err) console.error("Error deleting processed audio file:", err);
+					// 	else console.log(`Deleted processed audio file: ${outputFilePath}`);
+					// });
 				}
 			})
 			.on("error", (err) => {
