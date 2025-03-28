@@ -17,7 +17,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 		if (!req.file) return res.status(400).send("No audio file uploaded");
 		console.time("Processing Time");
 
-		const { url, staff_id, start_time, end_time, CallDuration } = req.body;
+		const { url, staff_id, start_time, end_time, CallDuration, store_id } = req.body;
 		console.log("Fields:", url, staff_id, start_time, end_time, CallDuration);
 
 		const requestId = uuidv4(); // Generate unique ID per request
@@ -50,6 +50,7 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 				formData.append("start_time", start_time);
 				formData.append("end_time", end_time);
 				formData.append("CallDuration", CallDuration);
+				formData.append("store_id", store_id);
 				formData.append("Recording", fs.createReadStream(outputFilePath), {
 					filename: `processed_audio_${requestId}.mp3`,
 					contentType: "audio/mp3",
