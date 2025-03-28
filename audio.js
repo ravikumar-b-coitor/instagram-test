@@ -91,12 +91,12 @@ app.post("/process", upload.single("Recording"), async (req, res) => {
 			})
 			.on("error", (err) => {
 				console.error("FFmpeg Error:", err);
-				res.status(500).send({ success: false, message: "Error processing audio" });
+				return res.status(500).send({ success: false, message: "Error processing audio" });
 			})
 			.save(outputFilePath);
 	} catch (error) {
 		console.error("Error:", error);
-		res.status(500).send({ success: false, message: "Error request processing audio" });
+		return res.status(500).send({ success: false, message: "Error request processing audio" });
 	}
 });
 
