@@ -40,7 +40,8 @@ const io = new Server(server, {
 			"http://localhost:5173", // Your client's origin
 			"https://admin-digitalwall.coitor.com", // Additional origin
 			"https://admin-digitalwall.xploro.io",
-			"https://admin-digitalwall-demo.xploro.io"
+			"https://admin-digitalwall-demo.xploro.io",
+			"https://sangeetha-dev.xploro.io"
 		],
 		methods: ["GET", "POST"]
 	}
@@ -115,7 +116,7 @@ app.post('/insta', async (req, res) => {
 					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					// const b = await axios.get(`${API_URLS[1]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
 					const c = await axios.get(`${API_URLS[0]}/?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
-					console.log(`-------- Facebook/AddInstaDm`, c.status);
+					console.log(`-------- Facebook/AddInstaDm`, c);
 
 					// Convert parameters to URLSearchParams format
 					const param = new URLSearchParams();
