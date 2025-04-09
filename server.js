@@ -52,10 +52,21 @@ app.use("/v2", audioProcessor);
 
 let midStore = new Set();
 
-io.on('connection', (socket) => {
-	console.log('a user connected');
+const users = {};
 
-	socket.on('disconnect', () => {
+io.on("connection", (socket) => {
+	socket.on("register", (userId) => {
+		users[userId] = socket.id;
+		console.log(`Registered user ${userId} with socket ID ${socket.id}`);
+	});
+
+	socket.on("disconnect", () => {
+		for (const [userId, id] of Object.entries(users)) {
+			if (id === socket.id) {
+				delete users[userId];
+				break;
+			}
+		}
 		console.error('user disconnected');
 	});
 });
@@ -82,10 +93,10 @@ app.get('/insta', (req, res) => {
 
 app.post('/insta', async (req, res) => {
 	try {
-		const data = req.body;
+		const data = req?.body;
 		console.log('Data : ', JSON.stringify(data));
 
-		const logMessage = `GET /insta - Body: ${JSON.stringify(req.body)}`;
+		const logMessage = `GET /insta - Body: ${JSON.stringify(data)}`;
 		writeLogToFile(logMessage); // Log to file
 
 		if (data?.object !== "page" && data?.object !== "instagram") return;
