@@ -450,6 +450,8 @@ app.get('/instagram', (req, res) => {
 app.post('/instagram', async (req, res) => {
 	console.log("POST  Okkkkkkk -----   User => ", 'Params:', req.params, 'Query:', req.query);
 	console.log('Body:', JSON.stringify(req.body));
+
+	const data = req?.body;
 	// Handle webhook events here
 
 	if (data?.object === "instagram") {
