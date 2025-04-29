@@ -120,7 +120,7 @@ app.post('/insta', async (req, res) => {
 					const API_URLS = [
 						"https://api-digitalwall.xploro.io/Facebook/AddInstaDm",
 						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
-						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
+						"https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
 					];
 
 					// let a = await axios.get(`${API_URLS[0]}?SenderId=${SenderId}&ReceiverId=${ReceiverId}&MessageId=${MessageId}&Message=${Message}`)
@@ -137,7 +137,7 @@ app.post('/insta', async (req, res) => {
 					const API_URL = [
 						"https://api-digitalwall.xploro.io/Facebook/ReplyDirectDM_V4",
 						// "https://api-digitalwall.coitor.com/Facebook/AddInstaDm",
-						// "https://api-digitalwall-demo.xploro.io/Facebook/AddInstaDm"
+						"https://api-digitalwall-demo.xploro.io/Facebook/ReplyDirectDM_V4"
 					];
 
 					Promise.allSettled(
@@ -180,7 +180,7 @@ app.post('/insta', async (req, res) => {
 				const API_URLS = [
 					"https://api-digitalwall.coitor.com/Facebook/ReplyFBCommentAutomationV3",
 					"https://api-digitalwall.xploro.io/Facebook/ReplyFBCommentAutomationV4",
-					"https://api-digitalwall-demo.xploro.io/Facebook/ReplyFBCommentAutomationV3"
+					"https://api-digitalwall-demo.xploro.io/Facebook/ReplyFBCommentAutomationV4"
 				];
 
 				// Construct the payload for the API requests
