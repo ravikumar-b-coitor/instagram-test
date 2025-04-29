@@ -231,7 +231,7 @@ app.post('/insta', async (req, res) => {
 
 				if (postId && messageText && commentId) {
 					const API_URLS = [
-						"https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
+						// "https://api-digitalwall.coitor.com/Instagram/ReplyCommentAutomationV3",
 						"https://api-digitalwall.xploro.io/Instagram/ReplyCommentAutomationV4",
 						"https://api-digitalwall-demo.xploro.io/Instagram/ReplyCommentAutomationV4"
 					];
@@ -260,9 +260,23 @@ app.post('/insta', async (req, res) => {
 						// Handle results from all endpoints
 						results.forEach((result, index) => {
 							if (result.status === 'fulfilled') {
-								console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
+								console.log(`✅ Success response from ${API_URLS[index]}:`, result.value.data);
 							} else {
-								console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
+								const error = result.reason;
+								if (error.response) {
+									// Server responded with a status other than 2xx
+									console.error(`❌ Error from ${API_URLS[index]}:`, {
+										status: error.response.status,
+										statusText: error.response.statusText,
+										data: error.response.data,
+									});
+								} else if (error.request) {
+									// No response received
+									console.error(`❌ No response from ${API_URLS[index]}:`, error.request);
+								} else {
+									// Other errors
+									console.error(`❌ Axios setup error for ${API_URLS[index]}:`, error.message);
+								}
 							}
 						});
 					} catch (error) {
