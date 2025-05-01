@@ -569,6 +569,8 @@ app.post('/instagram', async (req, res) => {
 					"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
 				];
 
+				console.log("---- AddInstaDm Results ----");
+
 				await Promise.allSettled(
 					ADD_URLS.map(url =>
 						axios.get(url, {
@@ -579,13 +581,17 @@ app.post('/instagram', async (req, res) => {
 								Message: message
 							}
 						})
+							.then(response => ({ url, data: response.data }))
+							.catch(error => {
+								throw { url, error };
+							})
 					)
 				).then(results => {
-					results.forEach((result, index) => {
+					results.forEach(result => {
 						if (result.status === 'fulfilled') {
-							console.log(`✅ Add DM ${index + 1}:`, result.value.data);
+							console.log(`✅ Add DM Success [${result.value.url}]:`, result.value.data);
 						} else {
-							console.error(`❌ Add DM error ${index + 1}:`, result.reason?.message);
+							console.error(`❌ Add DM Error [${result.reason.url}]:`, result.reason.error?.message);
 						}
 					});
 				});
@@ -597,12 +603,14 @@ app.post('/instagram', async (req, res) => {
 					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM_V4"
 				];
 
+				console.log("---- ReplyDirectDM Results ----");
+
 				for (const url of REPLY_URLS) {
 					try {
 						const response = await postRequest(url, senderId, recipientId, message);
-						console.log(`✅ Reply DM success from ${url}:`, response);
+						console.log(`✅ Reply DM success [${url}]:`, response);
 					} catch (err) {
-						console.error(`❌ Reply DM error from ${url}:`, err.message);
+						console.error(`❌ Reply DM error [${url}]:`, err?.response?.data || err.message);
 					}
 				}
 			}
