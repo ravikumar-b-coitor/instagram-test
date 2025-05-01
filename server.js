@@ -462,22 +462,29 @@ app.get('/instagram', (req, res) => {
 });
 
 app.post('/instagram', async (req, res) => {
-	console.log("POST  Okkkkkkk -----   User => ", 'Params:', req.params, 'Query:', req.query);
-	console.log('Body:', JSON.stringify(req.body));
+	try {
+		console.log("POST  Okkkkkkk ----- User =>", 'Params:', req.params, 'Query:', req.query);
+		console.log('Body:', JSON.stringify(req.body));
 
-	const data = req?.body;
-	// Handle webhook events here
+		const data = req.body;
 
-	if (data?.object === "instagram") {
-		if (data?.entry[0]?.changes && data?.entry[0]?.changes[0]?.field === "comments") {
-			console.log("------------------------------------------------------------------     ReplyCommentAutomationV3     ------------------------------------------------------------------");
+		if (data?.object !== "instagram") {
+			return res.status(200).send('Not an Instagram object');
+		}
 
-			const postId = data.entry[0].changes[0].value?.media?.id;
-			const messageText = data.entry[0].changes[0].value?.text;
-			const commentId = data.entry[0]?.changes[0].value?.id;
-			const recipientID = data.entry[0]?.changes[0].value?.from.id;
-			const recipientName = data.entry[0]?.changes[0].value?.from.username;
-			const time = data.entry[0]?.time;
+		const entry = data.entry?.[0];
+
+		// Handle Comment Replies
+		if (entry?.changes?.[0]?.field === "comments") {
+			console.log("----- ReplyCommentAutomationV3 -----");
+
+			const value = entry.changes[0].value;
+			const postId = value?.media?.id;
+			const messageText = value?.text;
+			const commentId = value?.id;
+			const recipientID = value?.from?.id;
+			const recipientName = value?.from?.username;
+			const time = entry?.time;
 
 			if (postId && messageText && commentId) {
 				const API_URLS = [
@@ -495,33 +502,30 @@ app.post('/instagram', async (req, res) => {
 					CommentID: commentId,
 				};
 
-				try {
-					const results = await Promise.allSettled(
-						API_URLS.map(url =>
-							axios.post(url, JSON.stringify(payload), {
-								headers: {
-									'Content-Type': 'application/json',
-									'accept': 'application/json'
-								},
-							})
-						)
-					);
+				const results = await Promise.allSettled(
+					API_URLS.map(url =>
+						axios.post(url, payload, {
+							headers: {
+								'Content-Type': 'application/json',
+								'accept': 'application/json'
+							}
+						})
+					)
+				);
 
-					// Handle results from all endpoints
-					results.forEach((result, index) => {
-						if (result.status === 'fulfilled') {
-							console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-						} else {
-							console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
-						}
-					});
-				} catch (error) {
-					console.error("Error: Instagram/ReplyCommentAutomationV3", error);
-				}
+				results.forEach((result, index) => {
+					if (result.status === 'fulfilled') {
+						console.log(`✅ Success from ${API_URLS[index]}:`, result.value.data);
+					} else {
+						console.error(`❌ Error from ${API_URLS[index]}:`, result.reason?.message);
+					}
+				});
 			}
-		} else if (data?.entry[0]?.messaging?.length > 0 &&
-			data?.entry[0]?.messaging[0]?.read) {
-			console.log("------------------------------------------------------------------     InstaDmReadState     ------------------------------------------------------------------");
+		}
+
+		// Handle DM Read Events
+		else if (entry?.messaging?.[0]?.read) {
+			console.log("----- InstaDmReadState -----");
 
 			const API_URLS = [
 				"https://api-digitalwall.coitor.com/Instagram/InstaDmReadState",
@@ -529,103 +533,99 @@ app.post('/instagram', async (req, res) => {
 				"https://api-digitalwall-demo.xploro.io/Instagram/InstaDmReadState"
 			];
 
+			const read = entry.messaging[0].read;
+			const sender = entry.messaging[0].sender;
+			const recipient = entry.messaging[0].recipient;
+
 			const payload = {
-				MessageId: data.entry[0].messaging[0].read.mid,
-				SenderId: data.entry[0].messaging[0].sender.id,
-				ReceiverId: data.entry[0].messaging[0].recipient.id,
+				MessageId: read.mid,
+				SenderId: sender.id,
+				ReceiverId: recipient.id
 			};
 
-			try {
-				const results = await Promise.allSettled(
-					API_URLS.map(url =>
-						axios.post(url, JSON.stringify(payload), {
-							headers: {
-								'Content-Type': 'application/json',
-								'accept': 'application/json'
-							},
-						})
-					)
-				);
+			const results = await Promise.allSettled(
+				API_URLS.map(url =>
+					axios.post(url, payload, {
+						headers: {
+							'Content-Type': 'application/json',
+							'accept': 'application/json'
+						}
+					})
+				)
+			);
 
-				// Handle results from all endpoints
-				results.forEach((result, index) => {
-					if (result.status === 'fulfilled') {
-						console.log(`Success response from ${API_URLS[index]}:`, result.value.data);
-					} else {
-						console.error(`Error response from ${API_URLS[index]}:`, result.reason.message);
-					}
-				});
-			} catch (error) {
-				console.error("Unexpected error:", error);
-			}
-		} else {
-			if (data?.entry[0]?.messaging?.length > 0 &&
-				data?.entry[0]?.messaging[0]?.message
-			) {
-				console.log("------------------------------------------------------------------     AddInstaDm     ------------------------------------------------------------------");
+			results.forEach((result, index) => {
+				if (result.status === 'fulfilled') {
+					console.log(`✅ Read success from ${API_URLS[index]}:`, result.value.data);
+				} else {
+					console.error(`❌ Read error from ${API_URLS[index]}:`, result.reason?.message);
+				}
+			});
+		}
 
-				const senderId = data.entry[0].messaging[0].sender.id;
-				const recipientId = data.entry[0].messaging[0].recipient.id;
-				const messageId = data.entry[0].messaging[0].message.mid;
-				const message = data.entry[0].messaging[0].message.text;
+		// Handle Direct Messages
+		else if (entry?.messaging?.[0]?.message) {
+			console.log("----- AddInstaDm -----");
 
-				if (midStore.has(messageId)) return;
+			const msg = entry.messaging[0];
+			const senderId = msg.sender.id;
+			const recipientId = msg.recipient.id;
+			const messageId = msg.message.mid;
+			const message = msg.message.text;
+
+			if (!midStore.has(messageId)) {
 				midStore.add(messageId);
 
-				const API_URLS = [
-					// "https://api-digitalwall.coitor.com/Instagram/AddInstaDm/",
+				const ADD_URLS = [
 					"https://api-digitalwall.xploro.io/Instagram/AddInstaDm/",
 					"https://api-digitalwall-demo.xploro.io/Instagram/AddInstaDm/"
 				];
 
-				Promise.allSettled(
-					API_URLS.map(url => {
-						console.log(`Making request to: ${url}`);
-						return axios.get(url, {
+				await Promise.allSettled(
+					ADD_URLS.map(url =>
+						axios.get(url, {
 							params: {
 								SenderId: senderId,
 								ReceiverId: recipientId,
 								MessageId: messageId,
 								Message: message
 							}
-						});
-					})
+						})
+					)
 				).then(results => {
 					results.forEach((result, index) => {
-						if (result.status === "fulfilled") {
-							console.log(`Response from API  AddInstaDm----- ${index + 1}:`, result.value.data);
+						if (result.status === 'fulfilled') {
+							console.log(`✅ Add DM ${index + 1}:`, result.value.data);
 						} else {
-							console.error(`Error from API  AddInstaDm----- ${index + 1}:`, result.reason);
+							console.error(`❌ Add DM error ${index + 1}:`, result.reason?.message);
 						}
 					});
 				});
+			}
 
-				if (senderId && recipientId && message) {
-					const API_URLS = [
-						// "https://api-digitalwall.coitor.com/Instagram/ReplyDirectDM",
-						"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM_V4",
-						"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM_V4"
-					];
+			if (senderId && recipientId && message) {
+				const REPLY_URLS = [
+					"https://api-digitalwall.xploro.io/Instagram/ReplyDirectDM_V4",
+					"https://api-digitalwall-demo.xploro.io/Instagram/ReplyDirectDM_V4"
+				];
 
-					const formData = new FormData();
-					formData.append('SenderId', senderId);
-					formData.append('DmMessage', message);
-					formData.append('RecipientId', recipientId);
-
-					for (const url of API_URLS) {
-						try {
-							const response = await postRequest(url, senderId, recipientId, message);
-							console.log(`Success response from ${url}:`, response);
-						} catch (error) {
-							console.error(`Error response from ${url}:`, error);
-						}
+				for (const url of REPLY_URLS) {
+					try {
+						const response = await postRequest(url, senderId, recipientId, message);
+						console.log(`✅ Reply DM success from ${url}:`, response);
+					} catch (err) {
+						console.error(`❌ Reply DM error from ${url}:`, err.message);
 					}
 				}
 			}
 		}
-	}
 
-	res.status(200).send('Event received');
+		res.status(200).send('Event received');
+
+	} catch (err) {
+		console.error("🚨 Internal Server Error:", err.message);
+		res.status(500).send('Internal Server Error');
+	}
 });
 
 server.listen(port, '0.0.0.0', () => {
