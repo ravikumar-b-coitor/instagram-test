@@ -397,49 +397,37 @@ app.post('/insta', async (req, res) => {
 	}
 });
 
-async function postRequest(url, senderId, recipientId, text) {
-	const boundary = `----WebKitFormBoundary${Math.random().toString(36).substring(7)}`;
-	const formData = [
-		`--${boundary}`,
-		`Content-Disposition: form-data; name="SenderId"\r\n\r\n${senderId}`,
-		`--${boundary}`,
-		`Content-Disposition: form-data; name="DmMessage"\r\n\r\n${text}`,
-		`--${boundary}`,
-		`Content-Disposition: form-data; name="RecipientId"\r\n\r\n${recipientId}`,
-		`--${boundary}--`
-	].join('\r\n');
+const postRequest = async (url, senderId, recipientId, message) => {
+	const formData = new FormData();
+	formData.append('SenderId', senderId);
+	formData.append('DmMessage', message);
+	formData.append('RecipientId', recipientId);
 
-	const options = {
-		method: 'POST',
-		headers: {
-			'Content-Type': `multipart/form-data; boundary=${boundary}`,
-			'Content-Length': Buffer.byteLength(formData),
-			'accept': 'application/json'
+	try {
+		const response = await axios.post(url, formData, {
+			headers: formData.getHeaders ? formData.getHeaders() : {},
+		});
+
+		if (typeof response.data === 'string') {
+			try {
+				return JSON.parse(response.data); // Try parsing only if needed
+			} catch (parseError) {
+				console.warn(`⚠️ Non-JSON response from ${url}:`, response.data);
+				return { Status: 0, Msg: 'Non-JSON response' };
+			}
 		}
-	};
 
-	return new Promise((resolve, reject) => {
-		const req = https.request(url, options, (res) => {
-			let data = '';
+		return response.data;
+	} catch (error) {
+		console.error(`❌ Error in postRequest to ${url}:`, error.message);
+		if (error.response) {
+			console.error(`❌ Server response:`, error.response.data);
+			return error.response.data;
+		}
+		throw error; // unexpected issue
+	}
+};
 
-			res.on('data', (chunk) => {
-				data += chunk;
-			});
-
-			res.on('end', () => {
-				console.log(JSON.stringify(data))
-				resolve(JSON.parse(data));
-			});
-		});
-
-		req.on('error', (error) => {
-			reject(error);
-		});
-
-		req.write(formData);
-		req.end();
-	});
-}
 
 app.get('/instagram', (req, res) => {
 	// Parse the query params
