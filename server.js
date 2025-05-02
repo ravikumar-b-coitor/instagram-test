@@ -621,6 +621,9 @@ app.post('/instagram', async (req, res) => {
 	} catch (err) {
 		console.error("🚨 Internal Server Error:", err.message);
 		res.status(500).send('Internal Server Error');
+	} finally {
+		io.emit('instaEvent', { method: 'GET', message: "Websocket..." });
+		return res.status(200).send('Event received');
 	}
 });
 
