@@ -11,45 +11,60 @@ const fs = require('fs');
 const app = express();
 const port = process.env.PORT || 3000;
 const audioProcessor = require("./audio");
-
 const { spawn } = require('child_process');
 
+app.use(cors());
 
 
-// Directory where HLS stream will be stored
+// HLS output directory
 const hlsOutputDir = path.join(__dirname, 'public/stream');
 if (!fs.existsSync(hlsOutputDir)) {
   fs.mkdirSync(hlsOutputDir, { recursive: true });
 }
 
-// Serve the HLS stream
+// Serve HLS stream publicly
 app.use('/stream', express.static(hlsOutputDir));
 
-// FFmpeg command to convert RTSP to HLS
+// RTSP stream URL
+const rtspUrl = 'rtsp://admin:Doers%402025@106.51.152.69:554/h264/ch1/main/av_stream';
+
+// Start FFmpeg to convert RTSP to HLS
+console.log('Starting FFmpeg...');
 const ffmpeg = spawn('ffmpeg', [
-  '-i', 'rtsp://admin:Doers%402025@106.51.152.69:554/h264/ch1/main/av_stream',
+  '-rtsp_transport', 'tcp',         // More stable than UDP
+  '-i', rtspUrl,
   '-c:v', 'libx264',
+  '-preset', 'veryfast',
+  '-tune', 'zerolatency',
   '-c:a', 'aac',
+  '-ar', '44100',
+  '-ac', '1',
   '-f', 'hls',
-  '-hls_time', '4',
+  '-hls_time', '2',                 // 2 second chunks
   '-hls_list_size', '5',
   '-hls_flags', 'delete_segments',
+  '-hls_segment_filename', path.join(hlsOutputDir, 'segment_%03d.ts'),
   path.join(hlsOutputDir, 'output.m3u8')
 ]);
 
+// Logging FFmpeg output
 ffmpeg.stderr.on('data', (data) => {
-  console.log(`FFmpeg log: ${data}`);
+  console.log(`FFmpeg log: ${data.toString()}`);
+});
+
+ffmpeg.on('error', (err) => {
+  console.error('Failed to start FFmpeg:', err);
 });
 
 ffmpeg.on('close', (code) => {
-  console.log(`FFmpeg process exited with code ${code}`);
+  console.log(`FFmpeg exited with code ${code}`);
 });
+
 
 
 
 let config = { verifyToken: "123456789" }
 
-app.use(cors());
 app.use(bodyParser.json({ limit: "100mb" }));
 app.use(bodyParser.urlencoded({ extended: true, limit: "100mb" }));
 
