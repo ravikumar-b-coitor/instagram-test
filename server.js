@@ -12,6 +12,41 @@ const app = express();
 const port = process.env.PORT || 3000;
 const audioProcessor = require("./audio");
 
+const { spawn } = require('child_process');
+
+
+
+// Directory where HLS stream will be stored
+const hlsOutputDir = path.join(__dirname, 'public/stream');
+if (!fs.existsSync(hlsOutputDir)) {
+  fs.mkdirSync(hlsOutputDir, { recursive: true });
+}
+
+// Serve the HLS stream
+app.use('/stream', express.static(hlsOutputDir));
+
+// FFmpeg command to convert RTSP to HLS
+const ffmpeg = spawn('ffmpeg', [
+  '-i', 'rtsp://admin:Doers%402025@106.51.152.69:554/h264/ch1/main/av_stream',
+  '-c:v', 'libx264',
+  '-c:a', 'aac',
+  '-f', 'hls',
+  '-hls_time', '4',
+  '-hls_list_size', '5',
+  '-hls_flags', 'delete_segments',
+  path.join(hlsOutputDir, 'output.m3u8')
+]);
+
+ffmpeg.stderr.on('data', (data) => {
+  console.log(`FFmpeg log: ${data}`);
+});
+
+ffmpeg.on('close', (code) => {
+  console.log(`FFmpeg process exited with code ${code}`);
+});
+
+
+
 let config = { verifyToken: "123456789" }
 
 app.use(cors());
